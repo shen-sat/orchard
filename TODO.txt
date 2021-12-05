@@ -1,0 +1,39 @@
+Elevator pitch: remake Orchard in PICO-8
+
+MVP 1 objective: decide user navigation 
+
+MVP 1:
+- naivagate orchard
+- create card-holder
+- move card-holder
+- rotate card-holder
+
+MVP 2:
+- create fruits
+- create cards (arrays of fruit)
+- initialize card-holder with a card
+	- fruits should move and roate with card. Use simple/visually inofmrative sprites
+- activate card (plant fruit)
+- assign another card to cartd holder
+	- for now, have card slide in from top right
+
+MVP 3:
+- add score
+- add simple dots to represent fruit/growth
+- implement rules for growth/scoring
+
+THEN SEND OUT :)
+
+TODO:
+- bring up item select (fullscreen, draft version with just two cards for now)
+
+--- notes on navigation
+
+- Arrow keys
+    - navigate orchard
+- Z
+    - Tap to rotate card
+    - Hold and press arrow keys to move card
+    - Hold and press X to bring up  item select
+- X
+    - Tap to plant
