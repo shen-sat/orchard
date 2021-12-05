@@ -12,7 +12,7 @@ MVP 2:
 - create fruits
 - create cards (arrays of fruit)
 - initialize card-holder with a card
-	- fruits should move and roate with card. Use simple/visually inofmrative sprites
+	- fruits should move and roate with card. Use simple/visually informative sprites
 - activate card (plant fruit)
 - assign another card to cartd holder
 	- for now, have card slide in from top right
