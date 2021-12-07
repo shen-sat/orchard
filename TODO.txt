@@ -1,5 +1,8 @@
 TODO:
 - create card-holder
+	- create rect
+	- rotate rect
+	- move rect
 
 ----
 Elevator pitch: remake Orchard in PICO-8
