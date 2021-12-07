@@ -1,10 +1,12 @@
+TODO:
+- create card-holder
+
+----
 Elevator pitch: remake Orchard in PICO-8
 
 MVP 1 objective: decide user navigation 
 
 MVP 1:
-- naivagate orchard
-- create card-holder
 - move card-holder
 - rotate card-holder
 
@@ -24,8 +26,9 @@ MVP 3:
 
 THEN SEND OUT :)
 
-TODO:
+Other:
 - bring up item select (fullscreen, draft version with just two cards for now)
+- create a border - it should use the current trees placed to detremine maximum widths/heights 
 
 --- notes on navigation
 
@@ -37,3 +40,7 @@ TODO:
     - Hold and press X to bring up  item select
 - X
     - Tap to plant
+
+
+DONE:
+- naivagate orchard
