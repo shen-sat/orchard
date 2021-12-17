@@ -1,8 +1,16 @@
 TODO:
 - create card-holder
-	- create rect
-	- rotate rect
+	- create rect -- DONE
+	- rotate rect -- DONE
+		- create compass 
+		- if Z, rotate card
 	- move rect
+		- arrow keys, moves card -- DONE
+		- collision
+			- top camera border, should not move any further
+			- left camera border, should not move any further
+			- right camera border, should not move an nearer than its horizontal width
+			- bottom camera border, should not move an nearer than its vertical height
 
 ----
 Elevator pitch: remake Orchard in PICO-8
