@@ -2,6 +2,8 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 function _init()
+  tile_size = 16
+
   cam = {
     x0 = 0,
     y0 = 0,
@@ -48,28 +50,28 @@ function _init()
   }
 
   selected_card = {
-    width = 2 * 8,
-    height = 3 * 8,
+    width = 2 * tile_size,
+    height = 3 * tile_size,
     col = 7,
     fruits = {one,two,three,four,five,six},
     vertical_slots = function(self) 
       return {
         { x = self.x0, y = self.y0 },
-        { x = self.x0 + 8, y = self.y0 },
-        { x = self.x0, y = self.y0 + 8 },
-        { x = self.x0 + 8, y = self.y0 + 8 },
-        { x = self.x0, y = self.y0 + 16 },
-        { x = self.x0 + 8, y = self.y0 + 16 }
+        { x = self.x0 + tile_size, y = self.y0 },
+        { x = self.x0, y = self.y0 + tile_size },
+        { x = self.x0 + tile_size, y = self.y0 + tile_size },
+        { x = self.x0, y = self.y0 + (tile_size * 2) },
+        { x = self.x0 + tile_size, y = self.y0 + (tile_size * 2) }
       }
     end,
     horizontal_slots = function(self) 
       return {
         { x = self.x0, y = self.y0 },
-        { x = self.x0 + 8, y = self.y0 },
-        { x = self.x0 + 16, y = self.y0 },
-        { x = self.x0, y = self.y0 + 8 },
-        { x = self.x0 + 8, y = self.y0 + 8 },
-        { x = self.x0 + 16, y = self.y0 + 8 }
+        { x = self.x0 + tile_size, y = self.y0 },
+        { x = self.x0 + (tile_size * 2), y = self.y0 },
+        { x = self.x0, y = self.y0 + tile_size },
+        { x = self.x0 + tile_size, y = self.y0 + tile_size },
+        { x = self.x0 + (tile_size * 2), y = self.y0 + tile_size }
       }
     end,
     compass = {
@@ -135,13 +137,13 @@ function _init()
       if btnp(4) then
         self.compass:rotate()
       elseif btnp(1) then
-        self.x0 += 8
+        self.x0 += tile_size
       elseif btnp(0) then
-        self.x0 -= 8
+        self.x0 -= tile_size
       elseif btnp(2) then
-        self.y0 -= 8
+        self.y0 -= tile_size
       elseif btnp(3) then
-        self.y0 += 8
+        self.y0 += tile_size
       end
     end
   }
