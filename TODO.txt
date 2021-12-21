@@ -1,16 +1,8 @@
 TODO:
-- create card-holder
-	- create rect -- DONE
-	- rotate rect -- DONE
-		- create compass 
-		- if Z, rotate card
-	- move rect
-		- arrow keys, moves card -- DONE
-		- collision
-			- top camera border, should not move any further
-			- left camera border, should not move any further
-			- right camera border, should not move an nearer than its horizontal width
-			- bottom camera border, should not move an nearer than its vertical height
+create fruits
+ - for now, create numbered fruits and you can have eight
+ - assign to card
+ - move fruit with vertical north-facing card
 
 ----
 Elevator pitch: remake Orchard in PICO-8
@@ -22,7 +14,7 @@ MVP 1:
 - rotate card-holder
 
 MVP 2:
-- create fruits
+
 - create cards (arrays of fruit)
 - initialize card-holder with a card
 	- fruits should move and roate with card. Use simple/visually informative sprites
@@ -54,4 +46,5 @@ Other:
 
 
 DONE:
-- naivagate orchard
+- create card
+- move card
