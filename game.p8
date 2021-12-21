@@ -17,25 +17,6 @@ function _init()
     end
   }
 
-  one = {
-    sprite = 0
-  }
-  two = {
-    sprite = 1
-  }
-  three = {
-    sprite = 2
-  }
-  four = {
-    sprite = 3
-  }
-  five = {
-    sprite = 4
-  }
-  six = {
-    sprite = 5
-  }
-
   orchard = {
     x0 = 0,
     y0 = 0,
@@ -49,11 +30,29 @@ function _init()
     width = 128
   }
 
+  apple = {
+    x = 0,
+    y = 0,
+    sprite = 0
+  }
+  lemon = {
+    x = 0,
+    y = 0,
+    sprite = 2
+  }
+  berry = {
+    x = 0,
+    y = 0,
+    sprite = 4
+  }
+
+  fruits_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
+
   selected_card = {
     width = 2 * tile_size,
     height = 3 * tile_size,
     col = 7,
-    fruits = {one,two,three,four,five,six},
+    fruits = fruits_one,
     vertical_slots = function(self) 
       return {
         { x = self.x0, y = self.y0 },
@@ -107,30 +106,42 @@ function _init()
     end,
     update = function(self)
       self:move()
+      self:update_fruits()
     end,
     draw = function(self)
+      self:draw_border()
       self:draw_fruits()
     end,
-    draw_fruits = function(self)
+    update_fruits = function(self)
       local fruits
       if self.compass:facing() == 'n' then
         fruits = self.fruits
       elseif self.compass:facing() == 's' then
         fruits = reverse_table(self.fruits)
       elseif self.compass:facing() == 'e' then
-        fruits = {five, three, one, six, four, two}
+        fruits = self:order_fruits_east()
       elseif self.compass:facing() == 'w' then
-        fruits = {two, four, six, one, three, five}
+        fruits = self:order_fruits_west()
       end
 
       if self:is_vertical() then
-        for k,v in pairs(fruits) do
-          spr(v.sprite,self:vertical_slots()[k].x,self:vertical_slots()[k].y)
+        for i,fruit in pairs(fruits) do
+          fruit.x = self:vertical_slots()[i].x
+          fruit.y = self:vertical_slots()[i].y
         end
       else
-        for k,v in pairs(fruits) do
-          spr(v.sprite,self:horizontal_slots()[k].x,self:horizontal_slots()[k].y)
+        for i,fruit in pairs(fruits) do
+          fruit.x = self:horizontal_slots()[i].x
+          fruit.y = self:horizontal_slots()[i].y
         end
+      end
+    end,
+    draw_border = function(self)
+      rect(self.x0,self.y0,self:x1(),self:y1(),self.col)
+    end,
+    draw_fruits = function(self)
+      for fruit in all(self.fruits) do
+        spr(fruit.sprite,fruit.x,fruit.y,2,2)
       end
     end,
     move = function(self)
@@ -145,7 +156,13 @@ function _init()
       elseif btnp(3) then
         self.y0 += tile_size
       end
-    end
+    end,
+    order_fruits_east = function(self)
+      return { self.fruits[5], self.fruits[3], self.fruits[1], self.fruits[6], self.fruits[4], self.fruits[2] }
+    end,
+    order_fruits_west = function(self)
+      return { self.fruits[2], self.fruits[4], self.fruits[6], self.fruits[1], self.fruits[3], self.fruits[5] }
+    end,
   }
 end
 
@@ -158,7 +175,6 @@ end
 function _draw()
   cls()
   rect(0,0,127,127,5) --border
-  rect(selected_card.x0,selected_card.y0,selected_card:x1(),selected_card:y1(),selected_card.col)
   selected_card:draw()
 end
 
@@ -208,11 +224,29 @@ function adjust_selected_card_or_camera_position(selected_card,cam)
   end
 end
 
+function copy_table(table)
+  new_table = {}
+  for k,v in pairs(table) do
+    new_table[k] = v
+  end
+
+  return new_table
+end
+
 __gfx__
-00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-000cc0000099900000bbbb0000e000000077770000dddd0000000000000000000000000000000000000000000000000000000000000000000000000000000000
-0000c0000000900000000b0000e0e0000070000000d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-0000c0000099000000000b0000e0e0000077700000d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-0000c0000090000000bbbb0000eeee000000700000dddd0000000000000000000000000000000000000000000000000000000000000000000000000000000000
-0000c0000099900000000b000000e0000077700000d00d0000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00ccccc00000000000bbbb000000e0000000000000dddd0000000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
+8888888888888888aaaaaaaaaaaaaaaa111111111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000
