@@ -2,6 +2,19 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 function _init()
+  cam = {
+    x0 = 0,
+    y0 = 0,
+    width = 128,
+    height = 128,
+    x1 = function(self)
+      return calculate_x1(self.x0, self.width)
+    end,
+    y1 = function(self)
+      return calculate_y1(self.y0, self.height)
+    end
+  }
+
   one = {
     sprite = 0
   }
@@ -92,7 +105,6 @@ function _init()
     end,
     update = function(self)
       self:move()
-      self:adjust_position()
     end,
     draw = function(self)
       self:draw_fruits()
@@ -131,31 +143,14 @@ function _init()
       elseif btnp(3) then
         self.y0 += 8
       end
-    end,
-    adjust_position = function(self)
-      if self:x1() > orchard:x1() then
-        local adjustment = self:x1() - orchard:x1()
-
-        self.x0 -= adjustment
-      elseif self:y1() > orchard:y1() then
-        local adjustment = self:y1() - orchard:y1()
-
-        self.y0 -= adjustment
-      elseif self.x0 < orchard.x0 then
-        local adjustment = orchard.x0 - self.x0
-
-        self.x0 += adjustment
-      elseif self.y0 < orchard.y0 then
-        local adjustment = orchard.y0 - self.y0
-
-        self.y0 += adjustment
-      end
     end
   }
 end
 
 function _update()
   selected_card:update()
+  adjust_selected_card_or_camera_position(selected_card, cam)
+  camera(cam.x0,cam.y0)
 end
 
 function _draw()
@@ -181,6 +176,34 @@ function reverse_table(table)
     counter -= 1
   end
   return result
+end
+
+function adjust_selected_card_or_camera_position(selected_card,cam)
+  if selected_card:x1() > cam:x1() then
+    local adjustment = selected_card:x1() - cam:x1()
+
+    if btnp(4) then
+      selected_card.x0 -= adjustment
+    else
+      cam.x0 += adjustment
+    end
+  elseif selected_card:y1() > cam:y1() then
+    local adjustment = selected_card:y1() - cam:y1()
+
+    if btnp(4) then
+      selected_card.y0 -= adjustment
+    else
+      cam.y0 += adjustment
+    end
+  elseif selected_card.x0 < cam.x0 then
+    local adjustment = cam.x0 - selected_card.x0
+    
+    cam.x0 -= adjustment
+  elseif selected_card.y0 < cam.y0 then
+    local adjustment = cam.y0 - selected_card.y0
+    
+    cam.y0 -= adjustment
+  end
 end
 
 __gfx__
