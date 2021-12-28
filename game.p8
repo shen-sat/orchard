@@ -48,6 +48,8 @@ function _init()
 
   fruits_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
 
+  planted_fruits = {}
+
   selected_card = {
     width = 2 * tile_size,
     height = 3 * tile_size,
@@ -105,12 +107,21 @@ function _init()
       return (self.compass:facing() == 'n' or self.compass:facing() == 's')
     end,
     update = function(self)
+      self:plant_fruits()
       self:move()
       self:update_fruits()
     end,
     draw = function(self)
       self:draw_border()
       self:draw_fruits()
+    end,
+    plant_fruits = function(self)
+      if btnp(5) then
+        for fruit in all(self.fruits) do
+          add(planted_fruits,fruit)
+          del(self.fruits,fruit)
+        end
+      end
     end,
     update_fruits = function(self)
       local fruits
@@ -176,6 +187,9 @@ function _draw()
   cls()
   rect(0,0,127,127,5) --border
   selected_card:draw()
+  for fruit in all(planted_fruits) do
+    spr(fruit.sprite,fruit.x,fruit.y,2,2)
+  end
 end
 
 function calculate_x1(x0, width)
