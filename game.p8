@@ -58,7 +58,7 @@ function _init()
     width = 2 * tile_size,
     height = 3 * tile_size,
     col = 7,
-    fruits = card_one,
+    card = card_one,
     vertical_slots = function(self) 
       return {
         { x = self.x0, y = self.y0 },
@@ -121,20 +121,20 @@ function _init()
     end,
     plant_fruits = function(self)
       if btnp(5) then
-        for fruit in all(self.fruits) do
+        for fruit in all(self.card) do
           add(planted_fruits,fruit)
         end
         local next_card = copy_table(deck[1])
-        self.fruits = next_card
+        self.card = next_card
         del(deck,deck[1])
       end
     end,
     update_fruits = function(self)
       local fruits
       if self.compass:facing() == 'n' then
-        fruits = self.fruits
+        fruits = self.card
       elseif self.compass:facing() == 's' then
-        fruits = reverse_table(self.fruits)
+        fruits = reverse_table(self.card)
       elseif self.compass:facing() == 'e' then
         fruits = self:order_fruits_east()
       elseif self.compass:facing() == 'w' then
@@ -157,7 +157,7 @@ function _init()
       rect(self.x0,self.y0,self:x1(),self:y1(),self.col)
     end,
     draw_fruits = function(self)
-      for fruit in all(self.fruits) do
+      for fruit in all(self.card) do
         spr(fruit.sprite,fruit.x,fruit.y,2,2)
       end
     end,
@@ -175,10 +175,10 @@ function _init()
       end
     end,
     order_fruits_east = function(self)
-      return { self.fruits[5], self.fruits[3], self.fruits[1], self.fruits[6], self.fruits[4], self.fruits[2] }
+      return { self.card[5], self.card[3], self.card[1], self.card[6], self.card[4], self.card[2] }
     end,
     order_fruits_west = function(self)
-      return { self.fruits[2], self.fruits[4], self.fruits[6], self.fruits[1], self.fruits[3], self.fruits[5] }
+      return { self.card[2], self.card[4], self.card[6], self.card[1], self.card[3], self.card[5] }
     end,
   }
 end
