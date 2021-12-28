@@ -46,7 +46,11 @@ function _init()
     sprite = 4
   }
 
-  fruits_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
+  card_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
+  card_two = { copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon) }
+  card_three = { copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple) }
+
+  deck = { card_two, card_three }
 
   planted_fruits = {}
 
@@ -54,7 +58,7 @@ function _init()
     width = 2 * tile_size,
     height = 3 * tile_size,
     col = 7,
-    fruits = fruits_one,
+    fruits = card_one,
     vertical_slots = function(self) 
       return {
         { x = self.x0, y = self.y0 },
@@ -119,8 +123,10 @@ function _init()
       if btnp(5) then
         for fruit in all(self.fruits) do
           add(planted_fruits,fruit)
-          del(self.fruits,fruit)
         end
+        local next_card = copy_table(deck[1])
+        self.fruits = next_card
+        del(deck,deck[1])
       end
     end,
     update_fruits = function(self)
@@ -186,10 +192,10 @@ end
 function _draw()
   cls()
   rect(0,0,127,127,5) --border
-  selected_card:draw()
   for fruit in all(planted_fruits) do
     spr(fruit.sprite,fruit.x,fruit.y,2,2)
   end
+  selected_card:draw()
 end
 
 function calculate_x1(x0, width)
