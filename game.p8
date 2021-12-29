@@ -34,19 +34,22 @@ function _init()
     name = 'apple',
     x = 0,
     y = 0,
-    sprite = 0
+    sprite = 0,
+    plantable = false
   }
   lemon = {
     name = 'lemon',
     x = 0,
     y = 0,
-    sprite = 2
+    sprite = 2,
+    plantable = false
   }
   berry = {
     name = 'berry',
     x = 0,
     y = 0,
-    sprite = 4
+    sprite = 4,
+    plantable = false
   }
 
   card_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
@@ -119,8 +122,8 @@ function _init()
       self:update_fruits()
     end,
     draw = function(self)
-      self:draw_border()
       self:draw_fruits()
+      self:draw_border()
     end,
     plant_fruits = function(self)
       if btnp(5) and self:is_plantable() then
@@ -133,10 +136,10 @@ function _init()
       end
     end,
     is_plantable = function(self)
-      local plantable_fruits = self.card
+      local fruits = self.card
 
       local plantable = true
-      for fruit in all(plantable_fruits) do
+      for fruit in all(fruits) do
         for f in all(planted_fruits) do
           if (fruit.x == f.x) 
           and (fruit.y == f.y) 
@@ -170,12 +173,37 @@ function _init()
           fruit.y = self:horizontal_slots()[i].y
         end
       end
+
+      -- mark plantable
+      for fruit in all(fruits) do fruit.plantable = false end
+      local overlapping_fruits = {}
+
+      if self:is_plantable() then
+        for fruit in all(fruits) do
+          for f in all(planted_fruits) do
+            if (fruit.x == f.x) 
+            and (fruit.y == f.y) 
+            and (fruit.name == f.name) 
+            then add(overlapping_fruits,fruit) end
+          end
+        end
+      end
+
+      for fruit in all(overlapping_fruits) do
+        fruit.plantable = true
+      end
     end,
     draw_border = function(self)
       rect(self.x0,self.y0,self:x1(),self:y1(),self.col)
     end,
     draw_fruits = function(self)
       for fruit in all(self.card) do
+        pal()
+        palt()
+        if fruit.plantable then 
+          palt(0,false)
+          pal(0,11)
+        end
         spr(fruit.sprite,fruit.x,fruit.y,2,2)
       end
     end,
@@ -208,7 +236,7 @@ function _update()
 end
 
 function _draw()
-  cls()
+  cls(3)
   rect(0,0,127,127,5) --border
   for fruit in all(planted_fruits) do
     spr(fruit.sprite,fruit.x,fruit.y,2,2)
