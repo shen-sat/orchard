@@ -31,16 +31,19 @@ function _init()
   }
 
   apple = {
+    name = 'apple',
     x = 0,
     y = 0,
     sprite = 0
   }
   lemon = {
+    name = 'lemon',
     x = 0,
     y = 0,
     sprite = 2
   }
   berry = {
+    name = 'berry',
     x = 0,
     y = 0,
     sprite = 4
@@ -120,7 +123,7 @@ function _init()
       self:draw_fruits()
     end,
     plant_fruits = function(self)
-      if btnp(5) then
+      if btnp(5) and self:is_plantable() then
         for fruit in all(self.card) do
           add(planted_fruits,fruit)
         end
@@ -128,6 +131,21 @@ function _init()
         self.card = next_card
         del(deck,deck[1])
       end
+    end,
+    is_plantable = function(self)
+      local plantable_fruits = self.card
+
+      local plantable = true
+      for fruit in all(plantable_fruits) do
+        for f in all(planted_fruits) do
+          if (fruit.x == f.x) 
+          and (fruit.y == f.y) 
+          and not (fruit.name == f.name) 
+          then plantable = false end
+        end
+      end
+
+      return plantable
     end,
     update_fruits = function(self)
       local fruits
