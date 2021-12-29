@@ -2,6 +2,16 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 function _init()
+  blink = {
+    blink = function(self)
+      return self.time < 9
+    end,
+    time = 0,
+    update = function(self)
+      self.time = (self.time + 1) % 18
+    end
+  }
+
   tile_size = 16
 
   cam = {
@@ -201,11 +211,13 @@ function _init()
         pal()
         palt()
         if fruit.plantable then 
-          palt(0,false)
-          pal(0,14)
+          if blink:blink() then
+            palt(0,false)
+            pal(0,11)
+          end
+          
         end
         spr(fruit.sprite,fruit.x,fruit.y,2,2)
-        -- if fruit.plantable then print('p',fruit.x,fruit.y,14) end
       end
     end,
     move = function(self)
@@ -234,10 +246,11 @@ function _update()
   selected_card:update()
   adjust_selected_card_or_camera_position(selected_card, cam)
   camera(cam.x0,cam.y0)
+  blink:update()
 end
 
 function _draw()
-  cls(3)
+  cls(5)
   rect(0,0,127,127,5) --border
   for fruit in all(planted_fruits) do
     spr(fruit.sprite,fruit.x,fruit.y,2,2)
