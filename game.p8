@@ -2,6 +2,56 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 function _init()
+  game = {}
+  intro()
+end
+
+function _update()
+  game.update()
+end
+
+function _draw()
+  game.draw()
+end
+
+function intro()
+  game.update = intro_update
+  game.draw = intro_draw
+end
+
+function intro_update()
+  if btnp(5) then start_game() end
+end
+
+function intro_draw()
+  cls()
+  
+  print('move card with arrow keys',1,1,7)
+  print('rotate card by pressing z')
+  print('place card by pressing x')
+  print('')
+  print('to score points:')
+  print('place cards so that overalpping')
+  print('squares match.')
+  print('the more matching squares that')
+  print('overlap, the more points')
+  print('you get :)')
+  print('')
+  print('press x to begin')
+  
+  
+end
+
+function start_game()
+  game.update = game_update
+  game.draw = game_draw
+  tile_size = 16
+  fruit_sprite_width = 2
+  fruit_sprite_height = 2
+  card_number = 1
+
+  score = 0
+
   blink = {
     blink = function(self)
       return self.time < 9
@@ -11,8 +61,6 @@ function _init()
       self.time = (self.time + 1) % 18
     end
   }
-
-  tile_size = 16
 
   cam = {
     x0 = 0,
@@ -45,28 +93,36 @@ function _init()
     x = 0,
     y = 0,
     sprite = 0,
-    plantable = false
+    is_growable = false
   }
   lemon = {
     name = 'lemon',
     x = 0,
     y = 0,
     sprite = 2,
-    plantable = false
+    is_growable = false
   }
   berry = {
     name = 'berry',
     x = 0,
     y = 0,
     sprite = 4,
-    plantable = false
+    is_growable = false
   }
 
-  card_one = { copy_table(apple), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon) }
-  card_two = { copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon), copy_table(lemon) }
-  card_three = { copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple), copy_table(apple) }
+  card_one = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+  card_two = { copy_table(lemon), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(berry) }
+  card_three = { copy_table(lemon), copy_table(apple), copy_table(berry), copy_table(lemon), copy_table(apple), copy_table(berry) }
+  card_four = { copy_table(berry), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon), copy_table(apple) }
+  card_five = { copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon), copy_table(apple), copy_table(berry) }
+  card_six = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+  card_seven = { copy_table(lemon), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(berry) }
+  card_eight = { copy_table(lemon), copy_table(apple), copy_table(berry), copy_table(lemon), copy_table(apple), copy_table(berry) }
+  card_nine = { copy_table(apple), copy_table(apple), copy_table(berry), copy_table(lemon), copy_table(lemon), copy_table(apple) }
 
-  deck = { card_two, card_three }
+  deck = { card_two, card_three, card_four, card_five, card_six, card_seven, card_eight, card_nine }
+
+  deck_start_count = #deck
 
   planted_fruits = {}
 
@@ -107,7 +163,7 @@ function _init()
         if self.index == 0 then self.index = #self.points end
       end
     },
-    x0 = 0,
+    x0 = cam.x0 + 128 - 32,
     y0 = 0,
     x1 = function(self)
       if self:is_vertical() then
@@ -138,11 +194,16 @@ function _init()
     plant_fruits = function(self)
       if btnp(5) and self:is_plantable() then
         for fruit in all(self.card) do
+          if fruit.is_growable then score += 1 end
           add(planted_fruits,fruit)
         end
+        card_number += 1
         local next_card = copy_table(deck[1])
         self.card = next_card
         del(deck,deck[1])
+        self.compass.index = 1
+        self.x0 = cam.x0 + 128 - 32
+        self.y0 = cam.y0
       end
     end,
     is_plantable = function(self)
@@ -185,7 +246,7 @@ function _init()
       end
 
       -- mark plantable
-      for fruit in all(fruits) do fruit.plantable = false end
+      for fruit in all(fruits) do fruit.is_growable = false end
       local overlapping_fruits = {}
 
       if self:is_plantable() then
@@ -200,7 +261,7 @@ function _init()
       end
 
       for fruit in all(overlapping_fruits) do
-        fruit.plantable = true
+        fruit.is_growable = true
       end
     end,
     draw_border = function(self)
@@ -208,16 +269,15 @@ function _init()
     end,
     draw_fruits = function(self)
       for fruit in all(self.card) do
-        pal()
-        palt()
-        if fruit.plantable then 
+        if fruit.is_growable then 
           if blink:blink() then
             palt(0,false)
             pal(0,11)
           end
-          
         end
-        spr(fruit.sprite,fruit.x,fruit.y,2,2)
+        spr(fruit.sprite,fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
+        pal()
+        palt()
       end
     end,
     move = function(self)
@@ -242,20 +302,38 @@ function _init()
   }
 end
 
-function _update()
+function game_update() 
   selected_card:update()
   adjust_selected_card_or_camera_position(selected_card, cam)
   camera(cam.x0,cam.y0)
   blink:update()
+  if card_number > deck_start_count + 1 then game_over() end
 end
 
-function _draw()
+function game_draw()
   cls(5)
-  rect(0,0,127,127,5) --border
   for fruit in all(planted_fruits) do
-    spr(fruit.sprite,fruit.x,fruit.y,2,2)
+    spr(fruit.sprite,fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
   end
   selected_card:draw()
+  print('card:'..card_number..' of '..deck_start_count + 1,cam.x0 + 1,cam.y0 + 1,7)
+  print('score:'..score,cam.x0 + 1,cam.y0 + 7,7)
+end
+
+function game_over()
+  game.update = game_over_update
+  game.draw = game_over_draw
+end
+
+function game_over_update()
+  if btnp(5) then start_game() end
+end
+
+function game_over_draw()
+  cls()
+  print('game over',cam.x0 + 1,cam.y0 + 1,7)
+  print('final score:'..score,cam.x0 + 1,cam.y0 + 7,7)
+  print('press x to replay',cam.x0 + 1,cam.y0 + 13,7)
 end
 
 function calculate_x1(x0, width)
