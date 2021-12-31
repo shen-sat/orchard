@@ -1,20 +1,7 @@
 In progress:
-- place random first card in middle of orchard
-    - do this by shuffling the deck and picking the first card
-        - create an empty array shuffled_deck {}
-        - then for all values in deck, del an item at i, 
-        where i is a random number between 1 and #deck
-        - when you delete an item, add it to the shuffled_deck
-
-
-----
-Elevator pitch: remake Orchard in PICO-8
-
-TODO:
-
 - change rules so that cards can only be placed when overlapping fruit
     - this will change the is_plantable/is_placable function
-    - card will now loop through all its fruits and as if each fruit is_growable
+    - card will now loop through all its fruits and ask if each fruit is_growable
     - to check if a fruit is growable, it will check itself against all planted fruit
     and return true if it overlaps and matches with a planted fruit
     - each fruit will also have an is_plantable function, This will return true if the
@@ -24,6 +11,12 @@ TODO:
         - and there are no non-growable or non-plantable fruits
     - and now you can use is_growable to highlight growable fruits, ie you can get rid of the
     code that "marks" fruits as growable (cos now you can just ask a fruit itself)
+
+
+----
+Elevator pitch: remake Orchard in PICO-8
+
+TODO:
 
 
 
@@ -53,3 +46,4 @@ DONE:
 - place cards
 - add ability to score
 - major refactor
+- place random first card in middle of orchard

@@ -4,6 +4,7 @@ selected_card = {
   x0 = first_card_place_x,
   y0 = first_card_place_y,
   col = 7,
+  card_number = 1,
   dealt_x0 = function()
     return (cam.x0 + 128 - 32)
   end,
@@ -68,8 +69,11 @@ selected_card = {
         if fruit.is_growable then score += 1 end
         add(planted_fruits,fruit)
       end
+      if deck:count() < 1 then return game_over() end -- game over
+
       local next_card = copy_table(deck.cards[1])
       self.card = next_card
+      self.card_number += 1
       del(deck.cards,deck.cards[1])
       self.compass.index = 1
       self.x0 = self:dealt_x0()
@@ -136,7 +140,7 @@ selected_card = {
         for f in all(planted_fruits) do
           if (fruit.x == f.x) 
           and (fruit.y == f.y) 
-          and (fruit.name == f.name) 
+          and (fruit.name == f.name)
           then add(overlapping_fruits,fruit) end
         end
       end

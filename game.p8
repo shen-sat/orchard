@@ -33,7 +33,6 @@ function game_update()
   adjust_selected_card_or_camera_position(selected_card,cam)
   camera(cam.x0,cam.y0)
   blink:update()
-  if deck:count() < 1 then game_over() end
 end
 
 function game_draw()
@@ -42,7 +41,7 @@ function game_draw()
     spr(fruit.sprite,fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
   end
   selected_card:draw()
-  print('cards left:'..deck:count(),cam.x0 + 1,cam.y0 + 1,7)
+  print('card:'..selected_card.card_number..'/'..deck.count_after_first_card_placement,cam.x0 + 1,cam.y0 + 1,7)
   print('score:'..score,cam.x0 + 1,cam.y0 + 7,7)
 end
 

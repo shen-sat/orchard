@@ -10,9 +10,9 @@ card_nine = { copy_table(apple), copy_table(apple), copy_table(berry), copy_tabl
 
 starting_cards = { card_one, card_two, card_three, card_four, card_five, card_six, card_seven, card_eight, card_nine }
 shuffled_cards = {}
-counter = #starting_cards
+no_of_starting_cards = #starting_cards
 
-for c=1,counter do
+for c=1,no_of_starting_cards do
   local i = flr(rnd(#starting_cards)) + 1
   local card = starting_cards[i]
   del(starting_cards,card)
@@ -22,6 +22,7 @@ end
 
 deck = {
 	cards = shuffled_cards,
+	count_after_first_card_placement = no_of_starting_cards - 1,
 	count = function(self)
 		return #self.cards
 	end
