@@ -3,7 +3,7 @@ version 32
 __lua__
 function _init()
   game = {}
-  intro()
+  start_game()
 end
 
 function _update()
@@ -12,34 +12,6 @@ end
 
 function _draw()
   game.draw()
-end
-
-function intro()
-  game.update = intro_update
-  game.draw = intro_draw
-end
-
-function intro_update()
-  if btnp(5) then start_game() end
-end
-
-function intro_draw()
-  cls()
-  
-  print('move card with arrow keys',1,1,7)
-  print('rotate card by pressing z')
-  print('place card by pressing x')
-  print('')
-  print('to score points:')
-  print('place cards so that overalpping')
-  print('squares match.')
-  print('the more matching squares that')
-  print('overlap, the more points')
-  print('you get :)')
-  print('')
-  print('press x to begin')
-  
-  
 end
 
 function start_game()

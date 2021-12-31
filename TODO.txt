@@ -1,35 +1,32 @@
-TODO:
-create fruits
- - for now, create numbered fruits and you can have eight
- - assign to card
- - move fruit with vertical north-facing card
+In progress:
+- refactor (move into seprate files, move magic numbers into variables)
+    - make sure the deck/card variables are DRY
 
 ----
 Elevator pitch: remake Orchard in PICO-8
 
-MVP 1 objective: decide user navigation 
+TODO:
+- place random first card in middle of orchard
+    - do this by shuffling the deck and picking the first card
+- change rules so that cards can only be placed when overlapping fruit
+    - this will change the is_plantable/is_placable function
+    - card will now loop through all its fruits and as if each fruit is_growable
+    - to check if a fruit is growable, it will check itself against all planted fruit
+    and return true if it overlaps and matches with a planted fruit
+    - each fruit will also have an is_plantable function, This will return true if the
+    fruit overlaps with nothing
+    - so now a card can be placed if:
+        - it has at least one growable fruit
+        - and there are no non-growable or non-plantable fruits
+    - and now you can use is_growable to highlight growable fruits, ie you can get rid of the
+    code that "marks" fruits as growable (cos now you can just ask a fruit itself)
 
-MVP 1:
-- move card-holder
-- rotate card-holder
 
-MVP 2:
-
-- create cards (arrays of fruit)
-- initialize card-holder with a card
-	- fruits should move and roate with card. Use simple/visually informative sprites
-- activate card (plant fruit)
-- assign another card to cartd holder
-	- for now, have card slide in from top right
-
-MVP 3:
-- add score
-- add simple dots to represent fruit/growth
-- implement rules for growth/scoring
-
-THEN SEND OUT :)
 
 Other:
+- create gifs with instructions for webpage that game is hosted on
+    - mention this in-game 
+    - mention edge-screen-scrolling
 - bring up item select (fullscreen, draft version with just two cards for now)
 - create a border - it should use the current trees placed to detremine maximum widths/heights 
 
@@ -48,3 +45,6 @@ Other:
 DONE:
 - create card
 - move card
+- create fruits
+- place cards
+- add ability to score
