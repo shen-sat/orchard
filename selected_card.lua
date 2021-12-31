@@ -1,10 +1,13 @@
 selected_card = {
   width = 2 * tile_size,
   height = 3 * tile_size,
-  x0 = selected_card_starting_x0,
-  y0 = 0,
+  x0 = first_card_place_x,
+  y0 = first_card_place_y,
   col = 7,
-  card = card_one,
+  dealt_x0 = function()
+    return (cam.x0 + 128 - 32)
+  end,
+  dealt_y0 = cam.y0,
   vertical_slots = function(self) 
     return {
       { x = self.x0, y = self.y0 },
@@ -69,9 +72,26 @@ selected_card = {
       self.card = next_card
       del(deck.cards,deck.cards[1])
       self.compass.index = 1
-      self.x0 = selected_card_starting_x0
-      self.y0 = cam.y0
+      self.x0 = self:dealt_x0()
+      self.y0 = self.dealt_y0
     end
+  end,
+  place_starting_card = function(self)
+    self.card = copy_table(deck.cards[1])
+    del(deck.cards,deck.cards[1])
+
+    self:update_fruits()
+
+    for fruit in all(self.card) do
+      add(planted_fruits,fruit)
+    end
+
+    local next_card = copy_table(deck.cards[1])
+    self.card = next_card
+    del(deck.cards,deck.cards[1])
+    self.compass.index = 1
+    self.x0 = self:dealt_x0()
+    self.y0 = self.dealt_y0
   end,
   move = function(self)
     if btnp(4) then

@@ -1,13 +1,17 @@
 In progress:
-- refactor (move into seprate files, move magic numbers into variables)
-    - make sure the deck/card variables are DRY
+- place random first card in middle of orchard
+    - do this by shuffling the deck and picking the first card
+        - create an empty array shuffled_deck {}
+        - then for all values in deck, del an item at i, 
+        where i is a random number between 1 and #deck
+        - when you delete an item, add it to the shuffled_deck
+
 
 ----
 Elevator pitch: remake Orchard in PICO-8
 
 TODO:
-- place random first card in middle of orchard
-    - do this by shuffling the deck and picking the first card
+
 - change rules so that cards can only be placed when overlapping fruit
     - this will change the is_plantable/is_placable function
     - card will now loop through all its fruits and as if each fruit is_growable
@@ -48,3 +52,4 @@ DONE:
 - create fruits
 - place cards
 - add ability to score
+- major refactor

@@ -24,6 +24,8 @@ function start_game()
   #include fruits.lua
   #include deck.lua
   #include selected_card.lua
+
+  selected_card:place_starting_card()
 end
 
 function game_update() 
