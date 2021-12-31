@@ -22,6 +22,7 @@ function adjust_selected_card_or_camera_position(selected_card,cam)
 
     if btnp(4) then
       selected_card.x0 -= adjustment
+      selected_card:update_fruits() -- card has adjusted, so fruit need to be adjusted too
     else
       cam.x0 += adjustment
     end
@@ -30,6 +31,7 @@ function adjust_selected_card_or_camera_position(selected_card,cam)
 
     if btnp(4) then
       selected_card.y0 -= adjustment
+      selected_card:update_fruits() -- card has adjusted, so fruit need to be adjusted too
     else
       cam.y0 += adjustment
     end
