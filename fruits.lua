@@ -4,7 +4,26 @@ make_fruit = function(name,sprite)
     x = 0,
     y = 0,
     sprite = sprite,
-    is_growable = false  
+    is_growable = function(self)
+      for fruit in all(planted_fruits) do
+        if (fruit.x == self.x) 
+        and (fruit.y == self.y) 
+        and (fruit.name == self.name)
+        then return true end
+      end
+
+      return false
+    end,
+    is_plantable = function(self)
+      for fruit in all(planted_fruits) do
+        if (fruit.x == self.x) 
+        and (fruit.y == self.y) 
+        and not (fruit.name == self.name)
+        then return false end
+      end
+
+      return true
+    end
   }
 
   return fruit

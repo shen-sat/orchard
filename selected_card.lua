@@ -5,10 +5,12 @@ selected_card = {
   y0 = first_card_place_y,
   col = 7,
   card_number = 1,
-  dealt_x0 = function()
+  deal_x0 = function()
     return (cam.x0 + 128 - 32)
   end,
-  dealt_y0 = cam.y0,
+  deal_y0 = function()
+    return cam.y0
+  end,
   vertical_slots = function(self) 
     return {
       { x = self.x0, y = self.y0 },
@@ -64,9 +66,9 @@ selected_card = {
     self:update_fruits()
   end,
   plant_fruits = function(self)
-    if btnp(5) and self:is_plantable() then
+    if btnp(5) and self:is_placable() then
       for fruit in all(self.card) do
-        if fruit.is_growable then score += 1 end
+        if fruit:is_growable() then score += 1 end
         add(planted_fruits,fruit)
       end
       if deck:count() < 1 then return game_over() end -- game over
@@ -76,8 +78,8 @@ selected_card = {
       self.card_number += 1
       del(deck.cards,deck.cards[1])
       self.compass.index = 1
-      self.x0 = self:dealt_x0()
-      self.y0 = self.dealt_y0
+      self.x0 = self:deal_x0()
+      self.y0 = self:deal_y0()
     end
   end,
   place_starting_card = function(self)
@@ -94,8 +96,8 @@ selected_card = {
     self.card = next_card
     del(deck.cards,deck.cards[1])
     self.compass.index = 1
-    self.x0 = self:dealt_x0()
-    self.y0 = self.dealt_y0
+    self.x0 = self:deal_x0()
+    self.y0 = self:deal_y0()
   end,
   move = function(self)
     if btnp(4) then
@@ -131,39 +133,18 @@ selected_card = {
         fruit.x, fruit.y = self:horizontal_slots()[i].x, self:horizontal_slots()[i].y
       end
     end
-    -- mark plantable
-    for fruit in all(fruits) do fruit.is_growable = false end
-    local overlapping_fruits = {}
-
-    if self:is_plantable() then
-      for fruit in all(fruits) do
-        for f in all(planted_fruits) do
-          if (fruit.x == f.x) 
-          and (fruit.y == f.y) 
-          and (fruit.name == f.name)
-          then add(overlapping_fruits,fruit) end
-        end
-      end
-    end
-
-    for fruit in all(overlapping_fruits) do
-      fruit.is_growable = true
-    end
   end,
-  is_plantable = function(self)
+  is_placable = function(self)
     local fruits = self.card
+    local number_of_growable_fruits = 0
 
-    local plantable = true
     for fruit in all(fruits) do
-      for f in all(planted_fruits) do
-        if (fruit.x == f.x) 
-        and (fruit.y == f.y) 
-        and not (fruit.name == f.name) 
-        then plantable = false end
-      end
+      if not fruit:is_plantable() then return false end
+
+      if fruit:is_growable() then number_of_growable_fruits += 1 end
     end
 
-    return plantable
+    return number_of_growable_fruits > 0
   end,
   order_fruits_east = function(self)
     return { self.card[5], self.card[3], self.card[1], self.card[6], self.card[4], self.card[2] }
@@ -174,7 +155,7 @@ selected_card = {
   end,
   draw_fruits = function(self)
     for fruit in all(self.card) do
-      if fruit.is_growable and blink:blink() then 
+      if self:is_placable() and fruit:is_growable() and blink:blink() then 
         palt(0,false)
         pal(0,11)
       end
