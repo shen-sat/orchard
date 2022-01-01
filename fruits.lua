@@ -4,6 +4,22 @@ make_fruit = function(name,sprite)
     x = 0,
     y = 0,
     sprite = sprite,
+    age = 0,
+    ages = {1,3,6},
+    grow = function(self)
+      local index
+      for i,age in pairs(self.ages) do
+        if self.age == age then index = i end
+      end
+
+      if index == nil then 
+        self.age = self.ages[1]
+      elseif (index == #self.ages) then
+        return
+      else
+        self.age = self.ages[index + 1]
+      end
+    end,
     is_growable = function(self)
       for fruit in all(planted_fruits) do
         if (fruit.x == self.x) 
