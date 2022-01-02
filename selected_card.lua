@@ -68,7 +68,7 @@ selected_card = {
   plant_fruits = function(self)
     if btnp(5) and self:is_placable() then
       for fruit in all(self.card) do
-        if fruit:is_growable() then score += 1 end
+        if fruit:matching_fruit() then score += 1 end
         add(planted_fruits,fruit)
       end
       if deck:count() < 1 then return game_over() end -- game over
@@ -141,7 +141,7 @@ selected_card = {
     for fruit in all(fruits) do
       if not fruit:is_plantable() then return false end
 
-      if fruit:is_growable() then number_of_growable_fruits += 1 end
+      if fruit:matching_fruit() then number_of_growable_fruits += 1 end
     end
 
     return number_of_growable_fruits > 0
@@ -155,7 +155,7 @@ selected_card = {
   end,
   draw_fruits = function(self)
     for fruit in all(self.card) do
-      if self:is_placable() and fruit:is_growable() and blink:blink() then 
+      if self:is_placable() and fruit:matching_fruit() and blink:blink() then 
         palt(0,false)
         pal(0,11)
       end

@@ -20,15 +20,15 @@ make_fruit = function(name,sprite)
         self.age = self.ages[index + 1]
       end
     end,
-    is_growable = function(self)
+    matching_fruit = function(self)
       for fruit in all(planted_fruits) do
         if (fruit.x == self.x) 
         and (fruit.y == self.y) 
         and (fruit.name == self.name)
-        then return true end
+        then return fruit end
       end
 
-      return false
+      return nil
     end,
     is_plantable = function(self)
       for fruit in all(planted_fruits) do
