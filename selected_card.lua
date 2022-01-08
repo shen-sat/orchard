@@ -68,9 +68,16 @@ selected_card = {
   plant_fruits = function(self)
     if btnp(5) and self:is_placable() then
       for fruit in all(self.card) do
-        if fruit:matching_fruit() then score += 1 end
-        add(planted_fruits,fruit)
+        
+        local matching_planted_fruit = fruit:matching_fruit()
+        if matching_planted_fruit then 
+          score += 1
+          matching_planted_fruit:grow()
+        elseif fruit:is_plantable() then
+          add(planted_fruits,fruit)
+        end        
       end
+
       if deck:count() < 1 then return game_over() end -- game over
 
       local next_card = copy_table(deck.cards[1])

@@ -1,7 +1,14 @@
 In progress:
 - add age to fruit
-    - atm you are allowing fruits to be placed on top of fruits with an age of 6. 
-    You will have to also block this from happening, perhaps by further defining the is_growable method 
+    - to test:
+        - make all the cards ALL berries
+        - pick a card, and make it the starting card
+        - pick a fruit within that card and make it its own variable
+        (so you can refer to it later)
+        - then plant over that selected fruit and print its age
+            - make sure it caps at 6
+    - you need to further refine `add(planted_fruits,fruit)` when you plant fruits 
+        - because, if a card fruit has a matching planted fruit, you want to grow the planted fruit and discard the card fruit. BUT if the card fruit is plantable with no matching fruit then you should add it to planted fruits -- DONE
 
 ----
 Elevator pitch: remake Orchard in PICO-8
