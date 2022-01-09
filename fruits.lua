@@ -3,10 +3,19 @@ make_fruit = function(name,color)
     name = name,
     x = 0,
     y = 0,
-    sprite = 0,
     color = color,
     age = 0,
     ages = {0,1,3,6},
+    sprite = function(self)
+      sprites = {0,2,4,6}
+
+      local index
+      for i,age in pairs(self.ages) do
+        if self.age == age then index = i end
+      end
+
+      return sprites[index]
+    end,
     grow = function(self)
       local index
       for i,age in pairs(self.ages) do
