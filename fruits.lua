@@ -1,9 +1,10 @@
-make_fruit = function(name,sprite)
+make_fruit = function(name,color)
   local fruit = {
     name = name,
     x = 0,
     y = 0,
-    sprite = sprite,
+    sprite = 0,
+    color = color,
     age = 0,
     ages = {1,3,6},
     grow = function(self)
@@ -45,8 +46,8 @@ make_fruit = function(name,sprite)
   return fruit
 end
 
-apple = make_fruit('apple',0)
-lemon = make_fruit('lemon',2)
-berry = make_fruit('berry',4)
+apple = make_fruit('apple',8)
+lemon = make_fruit('lemon',10)
+berry = make_fruit('berry',1)
 
 planted_fruits = {}

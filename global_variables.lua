@@ -6,6 +6,7 @@ screen_width = 128
 screen_height = 128
 first_card_place_x = screen_width/2 - tile_size
 first_card_place_y = screen_height/2 - (tile_size * 2)
+spritesheet_fruit_color = 8
 
 
 

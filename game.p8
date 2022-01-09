@@ -38,6 +38,7 @@ end
 function game_draw()
   cls(5)
   for fruit in all(planted_fruits) do
+    pal(spritesheet_fruit_color,fruit.color)
     spr(fruit.sprite,fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
   end
   selected_card:draw()
