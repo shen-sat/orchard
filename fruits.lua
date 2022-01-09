@@ -6,20 +6,17 @@ make_fruit = function(name,color)
     sprite = 0,
     color = color,
     age = 0,
-    ages = {1,3,6},
+    ages = {0,1,3,6},
     grow = function(self)
       local index
       for i,age in pairs(self.ages) do
         if self.age == age then index = i end
       end
 
-      if index == nil then 
-        self.age = self.ages[1]
-      elseif (index == #self.ages) then
-        return
-      else
-        self.age = self.ages[index + 1]
-      end
+      if index == #self.ages then return end
+
+
+      self.age = self.ages[index + 1]
     end,
     matching_fruit = function(self)
       for fruit in all(planted_fruits) do
