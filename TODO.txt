@@ -1,40 +1,51 @@
 In progress:
-- add age to fruit
-    - to test:
-        - make all the cards ALL berries
-        - pick a card, and make it the starting card
-        - pick a fruit within that card and make it its own variable
-        (so you can refer to it later)
-        - then plant over that selected fruit and print its age
-            - make sure it caps at 6
-    - you need to further refine `add(planted_fruits,fruit)` when you plant fruits 
-        - because, if a card fruit has a matching planted fruit, you want to grow the planted fruit and discard the card fruit. BUT if the card fruit is plantable with no matching fruit then you should add it to planted fruits -- DONE
-
-----
+- 
+------------------------------
 Elevator pitch: remake Orchard in PICO-8
 
 TODO:
+Next Mach:
+- animations for tree sprites
+    - white first? Look at pedro's examples for ideas
+    - should have a few leaves shoot up and then float down
+    - maybe white, then squahses down into hoirontal rectangle, then shoots
+    up into vertial rectangle, then rests as new tree..?
+    - look at pixel art farm games
+    - maybe look at on-hit animations?
+    - don't go overboard! It's your first time, be kind :)
+- add background colour - try criss cross light green and dark green
+    - but when you plant, there should only be dark green around planted fruit
+- change each tree sprite background to be dark green
+    - change the blinking function to use dark green, not black
+- add solid (for now) card border
+    - both borders can sit inside 16 x 32 grid - they only contain small seeds :)
+- add card slide animation
+
+Other Mach:
+- change plant to hold z and press down
+- change x to bring up a box (wooden signboard - go to town on this!) withs score/card no. 
+- create a border - it should use the current trees placed to detremine maximum widths/heights
+- create pseudo manual with control instructions for webpage that game is hosted on
+    - mention edge-screen-scrolling!
+    - with this we don't need an in-game tutorial, for now eh?
+- Wooden sign game over screen with scores
 
 
+- MUSIC
+    - Sarah beth yoga https://www.youtube.com/watch?v=VaoV1PrYft4 (first song)
 
 Other:
-- create gifs with instructions for webpage that game is hosted on
-    - mention this in-game 
-    - mention edge-screen-scrolling
+
 - bring up item select (fullscreen, draft version with just two cards for now)
-- create a border - it should use the current trees placed to detremine maximum widths/heights 
+- add "tattered" edges to card border
+- corners of planted fruit could have tiny bits of grass poking in..?
+- once last fruit is planted, have tiny critters move in
+    - on arrow press, user can scroll
+    - on any other key press bring up a box saying:
+        - arrows to scroll
+        - press and hold z and press down to see final score
 
---- notes on navigation
-
-- Arrow keys
-    - navigate orchard
-- Z
-    - Tap to rotate card
-    - Hold and press arrow keys to move card
-    - Hold and press X to bring up  item select
-- X
-    - Tap to plant
-
+------------------------------
 
 DONE:
 - create card
@@ -45,3 +56,5 @@ DONE:
 - major refactor
 - place random first card in middle of orchard
 - change rules so that cards can only be placed when overlapping fruit
+- add age to fruit
+- add tree sprites
