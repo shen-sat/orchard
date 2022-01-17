@@ -7,6 +7,10 @@ screen_height = 128
 first_card_place_x = screen_width/2 - tile_size
 first_card_place_y = screen_height/2 - (tile_size * 2)
 spritesheet_fruit_color = 8
-
-
-
+orchard_length = 256
+orchard_width = orchard_length + (tile_size * 2) + orchard_length
+orchard_height = orchard_length + (tile_size * 3) + orchard_length
+orchard_x0 = first_card_place_x - orchard_length
+orchard_y0 = first_card_place_y - orchard_length
+orchard_x1 = calculate_x1(orchard_x0,orchard_width)
+orchard_y1 = calculate_y1(orchard_y0,orchard_height)

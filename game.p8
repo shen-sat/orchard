@@ -37,6 +37,8 @@ end
 
 function game_draw()
   cls(5)
+  rectfill(orchard_x0,orchard_y0,orchard_x1,orchard_y1,3)
+
   for fruit in all(planted_fruits) do
     pal(spritesheet_fruit_color,fruit.color)
     spr(fruit:sprite(),fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
