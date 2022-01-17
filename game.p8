@@ -38,6 +38,33 @@ end
 function game_draw()
   cls(5)
   rectfill(orchard_x0,orchard_y0,orchard_x1,orchard_y1,3)
+  background_pattern = {}
+  bg_color = 3
+  for x=orchard_x0,orchard_x1 - 16,16 do
+    if bg_color == 3 then 
+      bg_color = 11
+    else
+      bg_color = 3
+    end
+    local next_x = x
+    for y=orchard_y0,orchard_y1 - 16,16 do
+      local next_y = y
+      local coordinates = { x0 = next_x, y0 = next_y, col = bg_color }
+
+      add(background_pattern,coordinates)
+      if bg_color == 3 then 
+        bg_color = 11
+      else
+        bg_color = 3
+      end
+    end
+  end
+
+  for square in all(background_pattern) do
+    local x0 = square.x0
+    local y0 = square.y0
+    rectfill(x0,y0,calculate_x1(x0,16),calculate_y1(y0,16),square.col)
+  end
 
   for fruit in all(planted_fruits) do
     pal(spritesheet_fruit_color,fruit.color)
