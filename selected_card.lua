@@ -163,8 +163,8 @@ selected_card = {
   draw_fruits = function(self)
     for fruit in all(self.card) do
       if self:is_placable() and fruit:matching_fruit() and blink:blink() then 
-        palt(0,false)
-        pal(0,11)
+        -- palt(0,false)
+        pal(3,11)
       end
       pal(spritesheet_fruit_color,fruit.color)
       spr(fruit:sprite(),fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
