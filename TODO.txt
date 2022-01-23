@@ -1,11 +1,5 @@
 In progress:
-- 
-------------------------------
-Elevator pitch: remake Orchard in PICO-8
-
-TODO:
-Next Mach:
-- animations for tree sprites
+- animations for tree sprites growth
     - white first? Look at pedro's examples for ideas
     - should have a few leaves shoot up and then float down
     - maybe white, then squahses down into hoirontal rectangle, then shoots
@@ -13,10 +7,12 @@ Next Mach:
     - look at pixel art farm games
     - maybe look at on-hit animations?
     - don't go overboard! It's your first time, be kind :)
-- add background colour - try criss cross light green and dark green
-    - but when you plant, there should only be dark green around planted fruit
-- change each tree sprite background to be dark green
-    - change the blinking function to use dark green, not black
+
+------------------------------
+Elevator pitch: remake Orchard in PICO-8
+
+TODO:
+Next Mach:
 - add solid (for now) card border
     - both borders can sit inside 16 x 32 grid - they only contain small seeds :)
 - add card slide animation
@@ -58,3 +54,4 @@ DONE:
 - change rules so that cards can only be placed when overlapping fruit
 - add age to fruit
 - add tree sprites
+- add lawn
