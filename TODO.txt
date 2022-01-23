@@ -1,5 +1,6 @@
 In progress:
 - animations for tree sprites growth
+    - look at the ghost in: https://saint11.org/img/pixel-tutorials/MotionBlur.gif
     - white first? Look at pedro's examples for ideas
     - should have a few leaves shoot up and then float down
     - maybe white, then squahses down into hoirontal rectangle, then shoots
@@ -40,6 +41,12 @@ Other:
     - on any other key press bring up a box saying:
         - arrows to scroll
         - press and hold z and press down to see final score
+- points rise from grown fruit
+- text for how many cards left could be on wooden board in corner: https://saint11.org/img/pixel-tutorials/UI-9-Slice.gif
+- title screen:
+ - https://saint11.org/img/pixel-tutorials/Vegetation.gif (leaves flaoting down)
+ - https://saint11.org/img/pixel-tutorials/Wood.gif (trunk)
+ - https://www.youtube.com/watch?v=Cdi8TdKJ4KE
 
 ------------------------------
 
