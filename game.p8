@@ -43,7 +43,7 @@ function game_draw()
 
   for fruit in all(planted_fruits) do
     pal(spritesheet_fruit_color,fruit.color)
-    spr(fruit:sprite(),fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
+    sspr(fruit:sx(),fruit:sy(),fruit:sw(),fruit:sh(),fruit:dx(),fruit:dy(),fruit:sw(),fruit:sh(),fruit:flip_x(),fruit:flip_y())
   end
   selected_card:draw()
   -- print('card:'..selected_card.card_number..'/'..deck.count_after_first_card_placement,cam.x0 + 1,cam.y0 + 1,7)

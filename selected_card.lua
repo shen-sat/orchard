@@ -167,7 +167,7 @@ selected_card = {
         pal(3,11)
       end
       pal(spritesheet_fruit_color,fruit.color)
-      spr(fruit:sprite(),fruit.x,fruit.y,fruit_sprite_width,fruit_sprite_height)
+      sspr(fruit:sx(),fruit:sy(),fruit:sw(),fruit:sh(),fruit:dx(),fruit:dy(),fruit:sw(),fruit:sh(),fruit:flip_x(),fruit:flip_y())
       pal()
       palt()
     end

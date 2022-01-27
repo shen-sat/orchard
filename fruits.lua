@@ -3,6 +3,47 @@ make_fruit = function(name,color)
     name = name,
     x = 0,
     y = 0,
+    sx = function(self)
+      if self.age == 0 or self.age == 1 or self.age == 6 then return 0 end
+      return 9
+    end,
+    sy = function(self)
+      if self.age == 0 then return 8 end
+      if self.age == 1 or self.age == 3 then return 0 end
+      if self.age == 6 then return 11 end
+    end,
+    sw = function(self)
+      if self.age == 0 then return 6 end
+      if self.age == 1 then return 10 end
+      if self.age == 3 then return 12 end
+      if self.age == 6 then return 14 end
+    end,
+    sh = function(self)
+      if self.age == 0 then return 3 end
+      if self.age == 1 then return 8 end
+      if self.age == 3 then return 12 end
+      if self.age == 6 then return 14 end
+    end,
+    dx = function(self)
+      if self.age == 0 then return (self.x + 6) end
+      if self.age == 1 then return (self.x + 3) end
+      if self.age == 3 then return (self.x + 2) end
+      if self.age == 6 then return (self.x + 1) end
+    end,
+    dy = function(self)
+      if self.age == 0 then return (self.y + 7) end
+      if self.age == 1 then return (self.y + 4) end
+      if self.age == 3 then return (self.y + 2) end
+      if self.age == 6 then return (self.y + 1) end
+    end,
+    flip_x = function(self)
+      return false
+    end,
+    flip_y = function(self)
+      if self.age == 3 then return true end
+
+      return false
+    end,
     color = color,
     age = 0,
     ages = {0,1,3,6},
