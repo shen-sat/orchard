@@ -1,5 +1,4 @@
 In progress:
-Refactor code for drawing sprites
 Get plants blinking again
 Animations for tree sprites growth
 - stutter each one

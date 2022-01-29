@@ -41,11 +41,7 @@ function game_draw()
   
   lawn:draw()
 
-  for fruit in all(planted_fruits) do
-    pal(spritesheet_fruit_color,fruit.color)
-    local sprite = fruit:sprite()
-    sspr(sprite.sx,sprite.sy,sprite.sw,sprite.sh,sprite.dx,sprite.dy,sprite.sw,sprite.sh,sprite.flip_x,sprite.flip_y)
-  end
+  for fruit in all(planted_fruits) do fruit:draw() end
   selected_card:draw()
   -- print('card:'..selected_card.card_number..'/'..deck.count_after_first_card_placement,cam.x0 + 1,cam.y0 + 1,7)
   -- print('score:'..score,cam.x0 + 1,cam.y0 + 7,7)

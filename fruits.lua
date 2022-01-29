@@ -12,6 +12,14 @@ make_fruit = function(name,color)
 
       return plant_sprites[self:age_index()]
     end,
+    draw = function(self)
+      rectfill(self.x,self.y,calculate_x1(self.x,tile_size),calculate_x1(self.y,tile_size),3)
+
+      pal(spritesheet_fruit_color,self.color)
+
+      local sprite = self:sprite()
+      sspr(sprite.sx,sprite.sy,sprite.sw,sprite.sh,sprite.dx,sprite.dy,sprite.sw,sprite.sh,sprite.flip_x,sprite.flip_y)
+    end,
     color = color,
     age = 0,
     ages = {0,1,3,6},
