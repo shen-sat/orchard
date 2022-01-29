@@ -1,4 +1,8 @@
 card_one = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+-- card_two = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+-- card_three = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+-- card_four = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
+-- card_five = { copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(lemon), copy_table(berry) }
 card_two = { copy_table(lemon), copy_table(lemon), copy_table(berry), copy_table(apple), copy_table(apple), copy_table(berry) }
 card_three = { copy_table(lemon), copy_table(apple), copy_table(berry), copy_table(lemon), copy_table(apple), copy_table(berry) }
 card_four = { copy_table(berry), copy_table(berry), copy_table(apple), copy_table(lemon), copy_table(lemon), copy_table(apple) }

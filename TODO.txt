@@ -26,6 +26,7 @@ Mach B (Pause For A Minute):
     - score/card no
     - tutorial text
         - controls
+            - move card past edge of screen to scroll around orchard
         - grow your orchard by placing cards
         - to place a card, at least one of its fruit must overlap a matching fruit in the orchard
         - then list sprites and scores
