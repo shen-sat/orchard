@@ -1,6 +1,6 @@
 In progress:
-Get plants blinking again
 Animations for tree sprites growth
+- add sprites for seed-bush anims in
 - stutter each one
 
 
@@ -17,19 +17,16 @@ Mach A (Deal Me In):
 
 
 Mach B (Pause For A Minute):
-- requires aseprite mock https://saint11.org/img/pixel-tutorials/UI-9-Slice.gif
 - change place card trigger: hold z and press down
-- there should be a tiny board on game start saying "Press and hold X"
+- there should be a tiny message at bottom of screen on game start saying "Press and hold X"
     - only when this is done do we deal card
-- change hold x to bring up pause screen (wooden signboard - go to town on this!)
+    - this should be re-used for game over "Press X to continue"
+- change hold x to bring up pause screen
     - score/card no
     - tutorial text
         - controls
-            - move card past edge of screen to scroll around orchard
-        - grow your orchard by placing cards
         - to place a card, at least one of its fruit must overlap a matching fruit in the orchard
         - then list sprites and scores
-            - seed = 0
             - bush = 1
             - sapling = 3
             - tree = 6
@@ -37,8 +34,8 @@ Mach B (Pause For A Minute):
 Mach C (Points Mean Prizes!)
 - requires aseprite mock
 - score should be calculated at end, based on ages of planted fruits
-- once last card pressed, any key press will bring up "Press X to see score" board from bottom of screen
-- pressing X brings up same board from pause screen but now it displays:
+- once last card pressed, any key press will bring up "Press X to continue" (use board from before)
+- pressing X brings up same pause screen but now it displays:
     - fruit sprites with x number next to each one
     - final score
     - "Press X to see rank"
