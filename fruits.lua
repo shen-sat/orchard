@@ -6,6 +6,13 @@ make_fruit = function(name,color)
     color = color,
     age = 0,
     ages = {0,1,3,6},
+    draw = function(self)
+      rectfill(self.x,self.y,calculate_x1(self.x,tile_size),calculate_x1(self.y,tile_size),3)
+
+      pal(spritesheet_fruit_color,self.color)
+
+      spr(self:sprite(),self.x,self.y,fruit_sprite_width,fruit_sprite_height)
+    end,
     sprite = function(self)
       sprites = {0,2,4,6}
 
