@@ -11,18 +11,58 @@ make_fruit = function(name,color)
 
       pal(spritesheet_fruit_color,self.color)
 
-      spr(self:sprite(),self.x,self.y,fruit_sprite_width,fruit_sprite_height)
+      spr(self.sprite,self.x,self.y,fruit_sprite_width,fruit_sprite_height)
     end,
-    sprite = function(self)
-      sprites = {0,2,4,6}
+    update = function(self)
+      self:calculate_sprite()
+    end,
+    grow_time = 0,
+    calculate_sprite = function(self)
+      if self.is_growing then
+        if not ((self.grow_time % 2) == 0) then 
+          self.grow_time += 1
+          return
+        end
 
-      local index
-      for i,age in pairs(self.ages) do
-        if self.age == age then index = i end
+        self.grow_time += 1
+
+        local index
+        for i,age in pairs(self.ages) do
+          if self.age == age then index = i end
+        end
+
+        local animation = self.animations[index - 1]
+
+        local frame = animation[self.current_animation_index]
+
+        self.current_animation_index += 1
+
+        if self.current_animation_index > #animation then
+          self.is_growing = false
+          self.current_animation_index = 1
+          self.grow_time = 0
+        end
+
+        self.sprite = frame
+      else
+        local sprites = {0,2,4,6}
+
+        local index
+        for i,age in pairs(self.ages) do
+          if self.age == age then index = i end
+        end
+
+        self.sprite = sprites[index]
       end
-
-      return sprites[index]
     end,
+    sprite,
+    animations = {
+      {32,34,36,38,40,42,44},
+      {64,66,68,70,72,74,76},
+      {96,98,100,102,104,106,108}
+    },
+    current_animation_index = 1,
+    is_growing = false,
     grow = function(self)
       local index
       for i,age in pairs(self.ages) do
@@ -31,8 +71,9 @@ make_fruit = function(name,color)
 
       if index == #self.ages then return end
 
-
       self.age = self.ages[index + 1]
+
+      self.is_growing = true
     end,
     matching_fruit = function(self)
       for fruit in all(planted_fruits) do
