@@ -6,6 +6,13 @@ make_fruit = function(name,color)
     color = color,
     age = 0,
     ages = {0,1,3,6},
+    age_index = function(self)
+      local index
+      for i,age in pairs(self.ages) do
+        if self.age == age then index = i end
+      end
+      return index
+    end,
     draw = function(self)
       rectfill(self.x,self.y,calculate_x1(self.x,tile_size),calculate_x1(self.y,tile_size),3)
 
@@ -18,6 +25,8 @@ make_fruit = function(name,color)
     end,
     grow_time = 0,
     calculate_sprite = function(self)
+      local age_index = self:age_index()
+
       if self.is_growing then
         if not ((self.grow_time % 2) == 0) then 
           self.grow_time += 1
@@ -26,14 +35,9 @@ make_fruit = function(name,color)
 
         self.grow_time += 1
 
-        local index
-        for i,age in pairs(self.ages) do
-          if self.age == age then index = i end
-        end
+        local animation = self.animations[age_index - 1]
 
-        local animation = self.animations[index - 1]
-
-        local frame = animation[self.current_animation_index]
+        self.sprite = animation[self.current_animation_index]
 
         self.current_animation_index += 1
 
@@ -42,17 +46,10 @@ make_fruit = function(name,color)
           self.current_animation_index = 1
           self.grow_time = 0
         end
-
-        self.sprite = frame
       else
         local sprites = {0,2,4,6}
 
-        local index
-        for i,age in pairs(self.ages) do
-          if self.age == age then index = i end
-        end
-
-        self.sprite = sprites[index]
+        self.sprite = sprites[age_index]
       end
     end,
     sprite,
