@@ -23,17 +23,19 @@ make_fruit = function(name,color)
     update = function(self)
       self:calculate_sprite()
     end,
-    grow_time = 0,
+    grow_time = -1,
+    current_animation_index = 1,
+    is_growing = false,
+    is_animation_frame = function(self)
+      return (self.grow_time % 2) == 0
+    end,
     calculate_sprite = function(self)
       local age_index = self:age_index()
 
       if self.is_growing then
-        if not ((self.grow_time % 2) == 0) then 
-          self.grow_time += 1
-          return
-        end
-
         self.grow_time += 1
+
+        if not self:is_animation_frame() then return end
 
         local animation = self.animations[age_index - 1]
 
@@ -42,9 +44,7 @@ make_fruit = function(name,color)
         self.current_animation_index += 1
 
         if self.current_animation_index > #animation then
-          self.is_growing = false
-          self.current_animation_index = 1
-          self.grow_time = 0
+          self:reset_and_stop_animation()
         end
       else
         local sprites = {0,2,4,6}
@@ -52,23 +52,23 @@ make_fruit = function(name,color)
         self.sprite = sprites[age_index]
       end
     end,
+    reset_and_stop_animation = function(self)
+      self.is_growing = false
+      self.current_animation_index = 1
+      self.grow_time = -1
+    end,
     sprite,
     animations = {
       {32,34,36,38,40,42,44},
       {64,66,68,70,72,74,76},
       {96,98,100,102,104,106,108}
     },
-    current_animation_index = 1,
-    is_growing = false,
     grow = function(self)
-      local index
-      for i,age in pairs(self.ages) do
-        if self.age == age then index = i end
-      end
+      local age_index = self:age_index()
 
-      if index == #self.ages then return end
+      if age_index >= #self.ages then return end
 
-      self.age = self.ages[index + 1]
+      self.age = self.ages[age_index + 1]
 
       self.is_growing = true
     end,
