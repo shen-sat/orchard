@@ -3,7 +3,7 @@ selected_card = {
   height = 3 * tile_size,
   x0 = first_card_place_x,
   y0 = first_card_place_y,
-  col = 7,
+  border_color = 1,
   card_number = 1,
   deal_x0 = function()
     return (cam.x0 + 128 - 32)
@@ -170,6 +170,7 @@ selected_card = {
     end
   end,
   draw_border = function(self)
-    rect(self.x0,self.y0,self:x1(),self:y1(),self.col)
+    rect(self.x0,self.y0, self:x1(), self:y1(), self.border_color)
+    rect(self.x0 + 2,self.y0 + 2, self:x1() - 2, self:y1() - 2, self.border_color)
   end
 }

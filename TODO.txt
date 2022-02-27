@@ -1,28 +1,5 @@
 In progress:
-Animations for tree sprites growth
-- add sprites for seed-bush anims in
-    - in fruit:
-        - create a new attribute animations
-            - an 2d array of sprite numbers
-        - create a new flag, is_growing, default false
-        - create a new attribute, animation, default nil
-        - create new attribute current_animation_index, default 1
-        - grow method will set is_growing = true
-        - in sprite function, if is_growing true
-            - fetch relevant animation using the index of age in ages (- 1, I think)
-            - fetch frame using current current_animation_index
-            - current_animation_index += 1
-            - if current_animation_index > frames in animation
-                - set is_growing to false
-                - set current_animation_index to 1
-    - sprite functio
-- stutter each one
 
-
-------------------------------
-Elevator pitch: remake Orchard in PICO-8
-
-TODO:
 Mach A (Deal Me In):
 - add solid (for now) card border
     - both borders can sit inside 16 x 32 grid - they only contain small seeds :)
@@ -30,6 +7,10 @@ Mach A (Deal Me In):
     - should only happen when all growth animations finsihed
     - until card is dealt, block controls
 
+------------------------------
+Elevator pitch: remake Orchard in PICO-8
+
+TODO:
 
 Mach B (Pause For A Minute):
 - change place card trigger: hold z and press down
@@ -96,10 +77,11 @@ Mach E (Music To My Ears)
 
 Other Mach:
 - create a border - it should use the current trees placed to detremine maximum widths/heights
+- stutter each fruit growth animation
 
 Other:
 
-- add "tattered" edges to card border
+- make card corners rounded
 - corners of planted fruit could have tiny bits of grass poking in..?
 - once last fruit is planted, have tiny critters move in
 - points rise from grown fruit
@@ -118,3 +100,4 @@ DONE:
 - add age to fruit
 - add tree sprites
 - add lawn
+- animations for fruit growth
