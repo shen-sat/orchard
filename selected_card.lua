@@ -5,11 +5,16 @@ selected_card = {
   y0 = first_card_place_y,
   border_color = 1,
   card_number = 1,
+  slide_counter = 1,
   deal_x0 = function()
     return (cam.x0 + 128 - 32)
   end,
-  deal_y0 = function()
+  deal_y0 = function(self)
     return cam.y0
+    -- return self.slide_start_y0()
+  end,
+  slide_start_y0 = function()
+    return cam.y0 - (tile_size * 3)
   end,
   vertical_slots = function(self) 
     return {
@@ -63,6 +68,19 @@ selected_card = {
   update = function(self)
     self:plant_fruits()
     self:move()
+    if manager.flag_b then 
+      if self.slide_counter < 6 then 
+        self.y0 += 8
+        self.slide_counter += 1
+      elseif self.slide_counter < 7 then
+        self.y0 += 4
+        self.slide_counter += 1
+      else
+        self.y0 += 1
+      end
+    else
+      if self.slide_counter > 1 then self.slide_counter = 1 end
+    end
     self:update_fruits()
   end,
   plant_fruits = function(self)
@@ -86,7 +104,7 @@ selected_card = {
       del(deck.cards,deck.cards[1])
       self.compass.index = 1
       self.x0 = self:deal_x0()
-      self.y0 = self:deal_y0()
+      self.y0 = self.slide_start_y0()
     end
   end,
   place_starting_card = function(self)
