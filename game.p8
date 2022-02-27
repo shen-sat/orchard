@@ -31,13 +31,13 @@ end
 
 function game_update() 
   selected_card:update()
-  -- adjust_selected_card_or_camera_position(selected_card,cam)
-  camera(cam.x0,cam.y0)
   blink:update()
   for fruit in all(planted_fruits) do
     fruit:update()
   end
   card_slide_manager:update()
+  adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
+  camera(cam.x0,cam.y0)
 end
 
 function game_draw()

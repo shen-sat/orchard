@@ -16,7 +16,9 @@ function reverse_table(table)
   return result
 end
 
-function adjust_selected_card_or_camera_position(selected_card,cam)
+function adjust_selected_card_or_camera_position(selected_card,cam,manager)
+  if manager.selected_card_can_slide or manager.is_any_fruit_growing then return end
+
   if selected_card:x1() > cam:x1() then
     local adjustment = selected_card:x1() - cam:x1()
 
