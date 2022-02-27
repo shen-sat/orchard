@@ -25,44 +25,8 @@ function start_game()
   #include deck.lua
   #include selected_card.lua
   #include lawn.lua
-
+  #include card_slide_manager.lua
   selected_card:place_starting_card()
-
-  manager = {
-    flag_a = false,
-    flag_b = false,
-    is_fruits_growing = function(self)
-      for fruit in all(planted_fruits) do
-        if fruit.is_growing then self.flag_a = true end
-      end
-    end,
-    is_fruits_stopped_growing = function(self)
-      -- if no fruits growing and flag_a is true then 
-        -- set flag_b = true
-        -- set flag_a = false
-      result = true
-      for fruit in all(planted_fruits) do
-        if fruit.is_growing then result = false end
-      end
-      
-      if result and self.flag_a then
-        self.flag_a = false
-        self.flag_b = true
-      end
-    end,
-    is_card_animation_finished = function(self)
-      -- if card has reached final position and flag_b is true then 
-      -- set flag_b = false
-      if selected_card.y0 == selected_card.deal_y0() and self.flag_b then
-        self.flag_b = false
-      end
-    end,
-    update = function(self)
-      self:is_fruits_growing()
-      self:is_fruits_stopped_growing()
-      self:is_card_animation_finished()
-    end
-  }
 end
 
 function game_update() 
@@ -73,7 +37,7 @@ function game_update()
   for fruit in all(planted_fruits) do
     fruit:update()
   end
-  manager:update()
+  card_slide_manager:update()
 end
 
 function game_draw()
@@ -85,9 +49,8 @@ function game_draw()
     fruit:draw()
   end
   selected_card:draw()
-  print(manager.flag_a,cam.x0,cam.y0,7)
-  print(manager.flag_b,cam.x0,cam.y0 + 7,7)
-  -- print('score:'..score,cam.x0 + 1,cam.y0 + 7,7)
+  -- print(manager.is_any_fruit_growing,cam.x0,cam.y0,7)
+  -- print(manager.selected_card_can_slide,cam.x0,cam.y0 + 7,7)
 end
 
 function game_over()

@@ -11,7 +11,6 @@ selected_card = {
   end,
   deal_y0 = function(self)
     return cam.y0
-    -- return self.slide_start_y0()
   end,
   slide_start_y0 = function()
     return cam.y0 - (tile_size * 3)
@@ -66,22 +65,30 @@ selected_card = {
     return (self.compass:facing() == 'n' or self.compass:facing() == 's')
   end,
   update = function(self)
-    self:plant_fruits()
-    self:move()
-    if manager.flag_b then 
-      if self.slide_counter < 6 then 
-        self.y0 += 8
-        self.slide_counter += 1
-      elseif self.slide_counter < 7 then
-        self.y0 += 4
-        self.slide_counter += 1
-      else
-        self.y0 += 1
-      end
+    if card_slide_manager.is_any_fruit_growing then return end
+
+    if card_slide_manager.selected_card_can_slide then
+      self:slide()
     else
-      if self.slide_counter > 1 then self.slide_counter = 1 end
+      self:plant_fruits()
+      self:move()
+      self:reset_slide_counter()
     end
     self:update_fruits()
+  end,
+  slide = function(self)
+    if self.slide_counter < 6 then 
+      self.y0 += 8
+      self.slide_counter += 1
+    elseif self.slide_counter < 7 then
+      self.y0 += 4
+      self.slide_counter += 1
+    else
+      self.y0 += 1
+    end
+  end,
+  reset_slide_counter = function(self)
+    if self.slide_counter > 1 then self.slide_counter = 1 end
   end,
   plant_fruits = function(self)
     if btnp(5) and self:is_placable() then
@@ -122,7 +129,7 @@ selected_card = {
     del(deck.cards,deck.cards[1])
     self.compass.index = 1
     self.x0 = self:deal_x0()
-    self.y0 = self:deal_y0()
+    self.y0 = self:slide_start_y0()
   end,
   move = function(self)
     if btnp(4) then
