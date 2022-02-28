@@ -91,7 +91,7 @@ selected_card = {
     if self.slide_counter > 1 then self.slide_counter = 1 end
   end,
   plant_fruits = function(self)
-    if btnp(5) and self:is_placable() then
+    if z_button.is_down and btnp(3) and self:is_placable() then
       for fruit in all(self.card) do
         
         local matching_planted_fruit = fruit:matching_fruit()
@@ -140,7 +140,7 @@ selected_card = {
       self.x0 -= tile_size
     elseif btnp(2) then
       self.y0 -= tile_size
-    elseif btnp(3) then
+    elseif btnp(3) and not z_button.is_down then
       self.y0 += tile_size
     end
   end,
