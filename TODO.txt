@@ -1,19 +1,15 @@
 In progress:
 
-Mach A (Deal Me In):
-- add solid (for now) card border
-    - both borders can sit inside 16 x 32 grid - they only contain small seeds :)
-- add card slide animation
-    - should only happen when all growth animations finsihed
-    - until card is dealt, block controls
-
-------------------------------
-Elevator pitch: remake Orchard in PICO-8
-
-TODO:
-
 Mach B (Pause For A Minute):
 - change place card trigger: hold z and press down
+    - first replace current rotate card functionality
+        - you'll need a way to detect button release
+            - z_button object
+            - is_pressed? function that maps to btnp..
+            - is_just_released? that is based on is_pressed and btnp...
+            - if is_just_released? then rotate card
+    - for placing card:
+        - if is_pressed? and btnp(down) then place
 - there should be a tiny message at bottom of screen on game start saying "Press and hold X"
     - only when this is done do we deal card
     - this should be re-used for game over "Press X to continue"
@@ -26,6 +22,12 @@ Mach B (Pause For A Minute):
             - bush = 1
             - sapling = 3
             - tree = 6
+
+
+------------------------------
+Elevator pitch: remake Orchard in PICO-8
+
+TODO:
 
 Mach C (Points Mean Prizes!)
 - requires aseprite mock
@@ -101,3 +103,5 @@ DONE:
 - add tree sprites
 - add lawn
 - animations for fruit growth
+- add solid card border
+- add card slide animation

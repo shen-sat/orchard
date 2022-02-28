@@ -27,9 +27,26 @@ function start_game()
   #include lawn.lua
   #include card_slide_manager.lua
   selected_card:place_starting_card()
+
+  z_button = {
+    is_down = false,
+    is_just_released = false, 
+    update = function(self)
+      if self.is_just_released then self.is_just_released = false end
+
+      if not self.is_down and btn(4) then 
+        self.is_down = true
+      elseif self.is_down and not btn(4) then 
+        self.is_down = false
+        self.is_just_released = true
+      end
+    end
+  }
+
 end
 
-function game_update() 
+function game_update()
+  z_button:update()
   selected_card:update()
   blink:update()
   for fruit in all(planted_fruits) do
@@ -49,8 +66,8 @@ function game_draw()
     fruit:draw()
   end
   selected_card:draw()
-  -- print(manager.is_any_fruit_growing,cam.x0,cam.y0,7)
-  -- print(manager.selected_card_can_slide,cam.x0,cam.y0 + 7,7)
+  print(z_button.is_down,cam.x0,cam.y0,7)
+  print(z_button.is_just_released,cam.x0,cam.y0 + 7,7)
 end
 
 function game_over()

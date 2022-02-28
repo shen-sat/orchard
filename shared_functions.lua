@@ -22,7 +22,7 @@ function adjust_selected_card_or_camera_position(selected_card,cam,manager)
   if selected_card:x1() > cam:x1() then
     local adjustment = selected_card:x1() - cam:x1()
 
-    if btnp(4) then
+    if z_button.is_just_released then
       selected_card.x0 -= adjustment
       selected_card:update_fruits() -- card has adjusted, so fruit need to be adjusted too
     else
@@ -31,7 +31,7 @@ function adjust_selected_card_or_camera_position(selected_card,cam,manager)
   elseif selected_card:y1() > cam:y1() then
     local adjustment = selected_card:y1() - cam:y1()
 
-    if btnp(4) then
+    if z_button.is_just_released then
       selected_card.y0 -= adjustment
       selected_card:update_fruits() -- card has adjusted, so fruit need to be adjusted too
     else

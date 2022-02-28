@@ -132,7 +132,7 @@ selected_card = {
     self.y0 = self:slide_start_y0()
   end,
   move = function(self)
-    if btnp(4) then
+    if z_button.is_just_released then
       self.compass:rotate()
     elseif btnp(1) then
       self.x0 += tile_size
