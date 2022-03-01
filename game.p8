@@ -28,6 +28,42 @@ function start_game()
   #include card_slide_manager.lua
   #include z_button.lua
   selected_card:place_starting_card()
+
+  pause_screen = {
+    x0 = 0,
+    y0 = 0,
+    width = 128,
+    height = 128,
+    x1 = function(self)
+      return calculate_x1(self.x0,self.width)
+    end,
+    y1 = function(self)
+      return calculate_y1(self.y0,self.height)
+    end,
+    col = 3,
+    draw = function(self)
+      rectfill(self.x0,self.y0,self:x1(),self:y1(),self.col)
+      print('current game',40,9,7)
+      print('score:',9,16,7)
+      print('card :',9,23,7)
+      print('controls',48,23 + 14,7)
+      print('move card  : ➡️,⬇️,⬅️,⬆️',9,23 + 14 + 5 + 2,7)
+      print('rotate card: tap z',9,23 + 14 + 5 + 2 + 5 + 2,7)
+      print('place card : hold z + tap ⬇️',9,23 + 14 + 5 + 2 + 5 + 2 + 5 + 2,7)
+      print('rules',54,23 + 14 + 21 + 8 + 5,7)
+      print('to place card, at least one',9,23 + 14 + 21 + 8 + 5 + 7,7)
+      print('of its fruit must overlap a',9,23 + 14 + 21 + 8 + 5 + 7 + 7,7)
+      print('matching fruit in orchard',9,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7,7)
+      spr(n,x,y,w,h,flip_x,flip_y)
+      spr(2,20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4,2,2)
+      spr(4,20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 2,2,2)
+      spr(6,20 + 16 + 20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 3,2,2)
+      print('3points',20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
+      print('6points',20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
+      print('9points',20 + 16 + 20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
+      -- spr(2,,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,2,2)
+    end
+  }
 end
 
 function game_update()
@@ -51,7 +87,8 @@ function game_draw()
     fruit:draw()
   end
   selected_card:draw()
-  -- print(z_button.is_down,cam.x0,cam.y0,7)
+  if btn(5) then pause_screen:draw() end
+  -- print('hello there',cam.x0,cam.y0,7)
   -- print(z_button.is_just_released,cam.x0,cam.y0 + 7,7)
 end
 
