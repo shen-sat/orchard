@@ -34,62 +34,62 @@ function start_game()
     y0 = 0,
     width = 128,
     height = 128,
+    col = 3,
+    text_color = 1,
+    title_color = 7,
+    left_margin = 9,
+    right_margin = 128 - 9,
     x1 = function(self)
       return calculate_x1(self.x0,self.width)
     end,
     y1 = function(self)
       return calculate_y1(self.y0,self.height)
     end,
-    col = 3,
+    title = function(self,texts,title_text_length,x0,y0)
+      local texts = texts
+      local title_first_x = x0
+      local title_first_y = y0
+      local line_y = title_first_y + 2
+
+      print(texts[1],title_first_x,title_first_y,self.title_color)
+      line(self.left_margin,line_y,title_first_x - 2,line_y,self.text_color)
+      line(title_first_x + title_text_length,line_y,self.right_margin,line_y,self.text_color)
+      
+      local counter_y = title_first_y
+      for text in all(texts) do
+        if not (text == texts[1]) then
+          counter_y += 7
+          print(text,self.left_margin,counter_y,self.text_color)
+        end
+      end
+    end,
     draw = function(self)
+      rectfill(self.x0,self.y0,self:x1(),self:y1(),4)
+      rectfill(self.x0 + 5,self.y0 + 5,self:x1() - 5,self:y1() - 5,1)
+      rectfill(self.x0 + 6,self.y0 + 6,self:x1() - 6,self:y1() - 6,self.col)
+
       local text_color = 1
       local title_color = 7
-      local all_lines_first_x = 9
-      -- 9 x 11
-      -- 12 x 4 = 48
+      local left_margin = 9
+      local right_margin = 128 - 9
 
-      rectfill(self.x0,self.y0,self:x1(),self:y1(),self.col)
-      local current_first_x = 40
-      local current_first_y = 9
-      local current_line_y = current_first_y + 2 
-      print('current game',current_first_x,current_first_y,title_color)
-      line(all_lines_first_x,current_line_y,current_first_x - 2,current_line_y,text_color)
-      line(current_first_x + 48,current_line_y,128 - 9,current_line_y,text_color)
-      print('score:',9,16,text_color)
-      print('card :',9,23,text_color)
-      --
-      
-      
-      local controls_first_x = 48
-      local controls_first_y = 23 + 14
-      local controls_line_y = controls_first_y + 2
-      print('controls',controls_first_x,23 + 14,title_color)
-      line(all_lines_first_x,controls_line_y,controls_first_x - 2,controls_line_y,text_color)
-      line(32 + controls_first_x,controls_line_y,128 - 9,controls_line_y,text_color)
-      print('move card  : ➡️,⬇️,⬅️,⬆️',9,controls_first_y + 5 + 2,text_color)
-      print('rotate card: tap z',9,controls_first_y + 5 + 2 + 5 + 2,text_color)
-      print('place card : hold z + tap ⬇️',9,controls_first_y + 5 + 2 + 5 + 2 + 5 + 2,text_color)
-      --
-      local rules_first_x = 54
-      local rules_first_y = 23 + 14 + 21 + 8 + 5
-      local rules_line_y = rules_first_y + 2
-      print('rules',rules_first_x,rules_first_y,title_color)
-      line(all_lines_first_x,rules_line_y,rules_first_x - 2,rules_line_y,text_color)
-      line(20 + rules_first_x,rules_line_y,128 - 9,rules_line_y,text_color)
-      -- line(all_lines_first_x,controls_line_y,controls_first_x - 2,controls_line_y,text_color)
-      -- line(32 + controls_first_x,controls_line_y,128 - 9,controls_line_y,text_color)
+      self:title({'current game', 'score:', 'card :'}, 12 * 4,40,9)
 
-      print('to place card, at least one',9,23 + 14 + 21 + 8 + 5 + 7,text_color)
-      print('of its fruit must overlap a',9,23 + 14 + 21 + 8 + 5 + 7 + 7,text_color)
-      print('matching fruit in orchard',9,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7,text_color)
-      spr(n,x,y,w,h,flip_x,flip_y)
-      spr(2,20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4,2,2)
-      spr(4,20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 2,2,2)
-      spr(6,20 + 16 + 20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 3,2,2)
-      print('3points',20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
-      print('6points',20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
-      print('9points',20 + 16 + 20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
-      -- spr(2,,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,2,2)
+      local controls_text = {'controls', 'move card  : ➡️,⬇️,⬅️,⬆️','rotate card: tap z','place card : hold z + tap ⬇️'}
+      self:title(controls_text,32,48,23 + 14)
+
+      local rules_text = { 'rules','to place card, at least one','of its fruit must overlap a','matching fruit in orchard' }
+      self:title(rules_text,20,54,23 + 14 + 21 + 8 + 5)
+      
+      spr(2,20,101,2,2)
+      spr(4,56,99,2,2)
+      spr(6,92,98,2,2)
+      print('3points',14,114,text_color)
+      print('6points',50,114,text_color)
+      print('9points',86,114,text_color)
+      print('3',14,114,2)
+      print('6',50,114,2)
+      print('9',86,114,2)
     end
   }
 end
