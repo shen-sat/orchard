@@ -36,7 +36,7 @@ function start_game()
     height = 128,
     col = 3,
     text_color = 1,
-    title_color = 7,
+    title_color = 2,
     left_margin = 9,
     right_margin = 128 - 10,
     x1 = function(self)

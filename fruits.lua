@@ -26,6 +26,7 @@ make_fruit = function(name,color)
     grow_time = -1,
     current_animation_index = 1,
     is_growing = false,
+    is_pushing_max_age = false,
     is_animation_frame = function(self)
       return (self.grow_time % 2) == 0
     end,
@@ -66,7 +67,10 @@ make_fruit = function(name,color)
     grow = function(self)
       local age_index = self:age_index()
 
-      if age_index >= #self.ages then return end
+      if age_index >= #self.ages then
+        self.is_pushing_max_age = true
+        return 
+      end
 
       self.age = self.ages[age_index + 1]
 
