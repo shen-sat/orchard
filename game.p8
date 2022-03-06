@@ -38,7 +38,7 @@ function start_game()
     text_color = 1,
     title_color = 7,
     left_margin = 9,
-    right_margin = 128 - 9,
+    right_margin = 128 - 10,
     x1 = function(self)
       return calculate_x1(self.x0,self.width)
     end,
@@ -64,9 +64,31 @@ function start_game()
       end
     end,
     draw = function(self)
+      --brown fill
       rectfill(self.x0,self.y0,self:x1(),self:y1(),4)
-      rectfill(self.x0 + 5,self.y0 + 5,self:x1() - 5,self:y1() - 5,1)
-      rectfill(self.x0 + 6,self.y0 + 6,self:x1() - 6,self:y1() - 6,self.col)
+      --blue fill
+      rectfill(self.x0 + 6,self.y0 + 6,self:x1() - 6,self:y1() - 6,1)
+      --green fill
+      rectfill(self.x0 + 7,self.y0 + 7,self:x1() - 7,self:y1() - 7,self.col)
+
+      --top details
+      rectfill(0,0,1,1,9)
+      line(1,4,127,4,2)
+      line(0,5,127,5,2)
+      --left details
+      line(0,6,5,6,2)
+      pset(0,7,9)
+      line(4,7,4,self:y1() - 6,2)
+      line(5,7,5,self:y1() - 6,2)
+      --bottom details
+      rectfill(0,self:y1() - 5,1,self:y1() - 4,9)
+      line(1,126,127,126,2)
+      line(0,127,127,127,2)
+      line(126,123,126,127,2)
+      --right border
+      pset(self:x1() - 5,self.y0 + 6,9)
+      line(126,1,126,self:y1() - 6,2)
+      line(127,0,127,127,2)
 
       local text_color = 1
       local title_color = 7
