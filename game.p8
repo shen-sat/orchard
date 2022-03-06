@@ -42,25 +42,53 @@ function start_game()
     end,
     col = 3,
     draw = function(self)
+      local text_color = 1
+      local title_color = 7
+      local all_lines_first_x = 9
+      -- 9 x 11
+      -- 12 x 4 = 48
+
       rectfill(self.x0,self.y0,self:x1(),self:y1(),self.col)
-      print('current game',40,9,7)
-      print('score:',9,16,7)
-      print('card :',9,23,7)
-      print('controls',48,23 + 14,7)
-      print('move card  : ➡️,⬇️,⬅️,⬆️',9,23 + 14 + 5 + 2,7)
-      print('rotate card: tap z',9,23 + 14 + 5 + 2 + 5 + 2,7)
-      print('place card : hold z + tap ⬇️',9,23 + 14 + 5 + 2 + 5 + 2 + 5 + 2,7)
-      print('rules',54,23 + 14 + 21 + 8 + 5,7)
-      print('to place card, at least one',9,23 + 14 + 21 + 8 + 5 + 7,7)
-      print('of its fruit must overlap a',9,23 + 14 + 21 + 8 + 5 + 7 + 7,7)
-      print('matching fruit in orchard',9,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7,7)
+      local current_first_x = 40
+      local current_first_y = 9
+      local current_line_y = current_first_y + 2 
+      print('current game',current_first_x,current_first_y,title_color)
+      line(all_lines_first_x,current_line_y,current_first_x - 2,current_line_y,text_color)
+      line(current_first_x + 48,current_line_y,128 - 9,current_line_y,text_color)
+      print('score:',9,16,text_color)
+      print('card :',9,23,text_color)
+      --
+      
+      
+      local controls_first_x = 48
+      local controls_first_y = 23 + 14
+      local controls_line_y = controls_first_y + 2
+      print('controls',controls_first_x,23 + 14,title_color)
+      line(all_lines_first_x,controls_line_y,controls_first_x - 2,controls_line_y,text_color)
+      line(32 + controls_first_x,controls_line_y,128 - 9,controls_line_y,text_color)
+      print('move card  : ➡️,⬇️,⬅️,⬆️',9,controls_first_y + 5 + 2,text_color)
+      print('rotate card: tap z',9,controls_first_y + 5 + 2 + 5 + 2,text_color)
+      print('place card : hold z + tap ⬇️',9,controls_first_y + 5 + 2 + 5 + 2 + 5 + 2,text_color)
+      --
+      local rules_first_x = 54
+      local rules_first_y = 23 + 14 + 21 + 8 + 5
+      local rules_line_y = rules_first_y + 2
+      print('rules',rules_first_x,rules_first_y,title_color)
+      line(all_lines_first_x,rules_line_y,rules_first_x - 2,rules_line_y,text_color)
+      line(20 + rules_first_x,rules_line_y,128 - 9,rules_line_y,text_color)
+      -- line(all_lines_first_x,controls_line_y,controls_first_x - 2,controls_line_y,text_color)
+      -- line(32 + controls_first_x,controls_line_y,128 - 9,controls_line_y,text_color)
+
+      print('to place card, at least one',9,23 + 14 + 21 + 8 + 5 + 7,text_color)
+      print('of its fruit must overlap a',9,23 + 14 + 21 + 8 + 5 + 7 + 7,text_color)
+      print('matching fruit in orchard',9,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7,text_color)
       spr(n,x,y,w,h,flip_x,flip_y)
       spr(2,20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4,2,2)
       spr(4,20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 2,2,2)
       spr(6,20 + 16 + 20 + 16 + 20,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 - 3,2,2)
-      print('3points',20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
-      print('6points',20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
-      print('9points',20 + 16 + 20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,7)
+      print('3points',20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
+      print('6points',20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
+      print('9points',20 + 16 + 20 + 16 + 20 - 6,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,text_color)
       -- spr(2,,23 + 14 + 21 + 8 + 5 + 7 + 7 + 7 + 5 + 4 + 13,2,2)
     end
   }
