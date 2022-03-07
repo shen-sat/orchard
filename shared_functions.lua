@@ -68,3 +68,7 @@ function reverse_table(table)
 
   return new_table
 end
+
+function is_game_over()
+  return deck:count() < 1
+end

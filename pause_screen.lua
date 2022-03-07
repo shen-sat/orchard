@@ -36,6 +36,7 @@ pause_screen = {
   update = function(self)
     if btn(5) then 
       self.show = true
+      if notice_board.show then notice_board.show = false end
     else
       self.show = false
     end

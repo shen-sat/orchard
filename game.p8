@@ -28,6 +28,43 @@ function start_game()
   #include card_slide_manager.lua
   #include z_button.lua
   #include pause_screen.lua
+  
+  notice_board = {
+    x0 = 64 - 22,
+    y0 = 128 - 17,
+    width = 22 * 2,
+    height = 17,
+    inner_col = 4,
+    outer_col = 1,
+    x1 = function(self)
+      return calculate_x1(self.x0,self.width)
+    end,
+    y1 = function(self)
+      return calculate_y1(self.y0,self.height)
+    end,
+    show = true,
+    start_text = {'press and','hold x'},
+    end_text = {'press x to','continue'},
+    text = function(self)
+      if is_game_over() then
+        return self.end_text
+      else
+        return self.start_text
+      end
+    end,
+    draw = function(self)
+      if not self.show then return end
+
+      rectfill(self.x0,self.y0,self:x1(),self:y1(),self.inner_col)
+      rect(self.x0,self.y0,self:x1(),self:y1(),self.outer_col)
+      line(self.x0 + 1,self:y1(),self:x1() - 1,self:y1(),self.inner_col)
+      local counter = 0
+      for line in all(self:text()) do
+        print(line,self.x0 + 2,self.y0 + 2 + counter,self.outer_col)
+        counter += 7
+      end
+    end
+  }
   selected_card:place_starting_card()
 end
 
@@ -54,6 +91,8 @@ function game_draw()
   end
   selected_card:draw()
   pause_screen:draw()
+  notice_board:draw()
+
   -- print('hello there',cam.x0,cam.y0,7)
   -- print(z_button.is_just_released,cam.x0,cam.y0 + 7,7)
 end
