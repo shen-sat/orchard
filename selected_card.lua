@@ -130,6 +130,7 @@ selected_card = {
     self.compass.index = 1
     self.x0 = self:deal_x0()
     self.y0 = self:slide_start_y0()
+    self:update_fruits() -- you've added fruits to selected card so you need to update their position
   end,
   move = function(self)
     if z_button.is_just_released then
