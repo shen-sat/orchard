@@ -129,6 +129,7 @@ end
 function show_scores_update()
   x_button:update()
   if x_button.is_just_released then
+    camera(0,0)
     start_game()
   end
 end
