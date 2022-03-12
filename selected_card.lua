@@ -103,7 +103,7 @@ selected_card = {
         end        
       end
 
-      if is_game_over() then return game_over() end -- game over
+      if is_game_over() then return view_orchard() end -- game over
 
       local next_card = copy_table(deck.cards[1])
       self.card = next_card

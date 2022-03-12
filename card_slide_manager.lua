@@ -29,7 +29,7 @@ card_slide_manager = {
       self.selected_card_can_slide = true
     end
   end,
-  is_card_animation_finished = function(self)
+  check_card_animation_finished = function(self)
     if selected_card.y0 == selected_card.deal_y0() and self.selected_card_can_slide then
       self.selected_card_can_slide = false
     end
@@ -38,6 +38,6 @@ card_slide_manager = {
     self:check_any_fruit_growing()
     self:check_fruits_stopped_growing()
     self:check_any_fruit_pushing_max_age()
-    self:is_card_animation_finished()
+    self:check_card_animation_finished()
   end
 }

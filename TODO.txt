@@ -1,6 +1,7 @@
 In progress:
 
 Mach B (Pause For A Minute):
+- we should go over into game over screen on tap X
 - there should be a tiny message at bottom of screen on game start saying "Press and hold X"
     - only when this is done do we deal card ie we block any other update until pause screen takes up whole screen (mid_x - 22, bottom - 17)
     - this box should be re-used for game over "Press X to continue"

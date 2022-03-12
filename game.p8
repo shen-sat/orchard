@@ -27,40 +27,43 @@ function start_game()
   #include lawn.lua
   #include card_slide_manager.lua
   #include z_button.lua
+  #include x_button.lua
   #include pause_screen.lua
   
+  -- you have to refactor this relative to cam so that end of game you can see it 
   notice_board = {
-    x0 = 64 - 22,
-    y0 = 128 - 17,
+    x0 = function(self)
+      return cam.x0 + (64 - 22)  
+    end,
+    y0 = function(self)
+      return cam.y0 + (128 - 17)
+    end,
     width = 22 * 2,
     height = 17,
     inner_col = 4,
     outer_col = 1,
     x1 = function(self)
-      return calculate_x1(self.x0,self.width)
+      return calculate_x1(self:x0(),self.width)
     end,
     y1 = function(self)
-      return calculate_y1(self.y0,self.height)
+      return calculate_y1(self:y0(),self.height)
     end,
     show = true,
-    start_text = {'press and','hold x'},
     end_text = {'press x to','continue'},
-    text = function(self)
-      if is_game_over() then
-        return self.end_text
-      else
-        return self.start_text
-      end
+    text = {'press and','hold x'},
+    update = function(self)
+      self.text = self.end_text
+      if not self.show then self.show = true end
     end,
     draw = function(self)
       if not self.show then return end
 
-      rectfill(self.x0,self.y0,self:x1(),self:y1(),self.inner_col)
-      rect(self.x0,self.y0,self:x1(),self:y1(),self.outer_col)
-      line(self.x0 + 1,self:y1(),self:x1() - 1,self:y1(),self.inner_col)
+      rectfill(self:x0(),self:y0(),self:x1(),self:y1(),self.inner_col)
+      rect(self:x0(),self:y0(),self:x1(),self:y1(),self.outer_col)
+      line(self:x0() + 1,self:y1(),self:x1() - 1,self:y1(),self.inner_col)
       local counter = 0
-      for line in all(self:text()) do
-        print(line,self.x0 + 2,self.y0 + 2 + counter,self.outer_col)
+      for line in all(self.text) do
+        print(line,self:x0() + 2,self:y0() + 2 + counter,self.outer_col)
         counter += 7
       end
     end
@@ -93,20 +96,44 @@ function game_draw()
   pause_screen:draw()
   notice_board:draw()
 
-  -- print('hello there',cam.x0,cam.y0,7)
-  -- print(z_button.is_just_released,cam.x0,cam.y0 + 7,7)
+  -- print(deck:count(),cam.x0,cam.y0,7)
 end
 
-function game_over()
-  game.update = game_over_update
-  game.draw = game_over_draw
+function view_orchard()
+  game.update = view_orchard_update
+  game.draw = view_orchard_draw
 end
 
-function game_over_update()
-  if btnp(5) then start_game() end
+function view_orchard_update()
+  for fruit in all(planted_fruits) do
+    fruit:update()
+  end
+  notice_board:update()
+  x_button:update()
+  if x_button.is_just_released then
+    game.update = show_scores_update
+    game.draw = show_scores_draw
+  end
 end
 
-function game_over_draw()
+function view_orchard_draw()
+  cls(5)
+  lawn:draw()
+
+  for fruit in all(planted_fruits) do
+    fruit:draw()
+  end
+  notice_board:draw()
+end
+
+function show_scores_update()
+  x_button:update()
+  if x_button.is_just_released then
+    start_game()
+  end
+end
+
+function show_scores_draw()
   cls()
   print('game over',cam.x0 + 1,cam.y0 + 1,7)
   print('final score:'..score,cam.x0 + 1,cam.y0 + 7,7)
