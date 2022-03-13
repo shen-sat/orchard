@@ -77,7 +77,8 @@ pause_screen = {
     line(self:x0() + 126,self:y0() + 1,self:x0() + 126,self:y1() - 6,2)
     line(self:x0() + 127,self:y0(),self:x0() + 127,self:y0() + 127,2)
 
-    self:title({'current game', 'score:', 'card :'}, 12 * 4,40,9)
+    local card_data = deck.count_after_first_card_placement - #deck.cards
+    self:title({'current game', 'score:'..score, 'card :'..card_data..'/'..deck.count_after_first_card_placement}, 12 * 4,40,9)
 
     local controls_text = {'controls', 'move card  : ➡️,⬇️,⬅️,⬆️','rotate card: tap z','place card : hold z + tap ⬇️'}
     self:title(controls_text,32,48,23 + 14)
