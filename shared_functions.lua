@@ -72,3 +72,7 @@ end
 function is_game_over()
   return deck:count() < 1
 end
+
+function is_notice_board_or_pause_screen_showing()
+  return (notice_board.show or pause_screen.show)
+end

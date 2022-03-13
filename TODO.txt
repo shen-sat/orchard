@@ -72,6 +72,7 @@ Other:
 - once last fruit is planted, have tiny critters move in
 - points rise from grown fruit
 - when x is pressed (ie pause screen is activated) all other updates/draws are skipped
+- when player retries game, first notice should not be shown
 
 ------------------------------
 
