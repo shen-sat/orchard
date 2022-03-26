@@ -1,31 +1,25 @@
 In progress:
-Mach C (Points Mean Prizes!)
-- take score from game into rank screen
-- row will blink to indicate actual rank
-    - first just make it white, to check it is working
-    - then make it white
 
-
-------------------------------
-Elevator pitch: remake Orchard in PICO-8
-
-TODO:
-
-
-
-Mach D (SFX)
-- growth "blops"
-- card slide "shhh"
-- card movement "bub" for rotate/"boob" for move
-- card placement "flumf/floomf"
-- pause "clack"
-- start game tinkly "di di di di"
+- have a start screen object
+    - has shentendo
+        - text
+        - position
+        - finish_position
+        - write something in middle of screen method?
+        - on update, position moves down
+        - when it reaches finish_position, it switches a flag
+    - has credits
+        - code, art and sfx by your boi shen
+        - game design by Mark Tuck
+        - time on screen (7 for now)
+        - when time is finsihed, flag is switched
+    - has main titles
+        - need to work out position of all elements
+        - after some time elapsed (or button X press) show "press start"
+        - on press x (again), start game
+    - then add fade in/fade out for all the above
 
 Mach E (Main Titles)
-- requires aseprite mocks
-    - https://saint11.org/img/pixel-tutorials/Vegetation.gif (leaves flaoting down)
-    - https://saint11.org/img/pixel-tutorials/Wood.gif (trunk)
-    - https://www.youtube.com/watch?v=Cdi8TdKJ4KE
 - shentendo screen
 - credits screen
     - code
@@ -42,6 +36,20 @@ Mach E (Main Titles)
     - "Press X to start" should appear after a while, or on button X press
 - each screen should "fade" into next. Google pico 8 examples for pseudo fade 
 - pressing x on game over should take you back to MAIN TITLE
+
+------------------------------
+Elevator pitch: remake Orchard in PICO-8
+
+TODO:
+
+Mach D (SFX)
+- growth "blops"
+- card slide "shhh"
+- card movement "bub" for rotate/"boob" for move
+- card placement "flumf/floomf"
+- pause "clack"
+- start game tinkly "di di di di"
+
 
 Mach E (Music To My Ears)
 - yoga music https://www.youtube.com/watch?v=VaoV1PrYft4
@@ -82,3 +90,4 @@ DONE:
 - change place card trigger: hold z and press down
 - change hold x to bring up pause screen
 - add pause screen and notice board
+- show rank screen

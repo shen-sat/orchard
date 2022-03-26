@@ -31,35 +31,95 @@ function start_game()
   #include pause_screen.lua
   #include notice_board.lua
   #include rank_screen.lua
+
+  intro = {
+    logo = { 
+      lines = {'shentendo✽'},
+      col = 1,
+      x0 = cam.x0 + (128/2) - ((10 * 4)/2),
+      y0 = cam.y0 - 6,
+      finish_y0 = cam.y0 + 128/2 - (2),
+      counter = 0,
+      time = 2 * 30,
+      finished = false,
+      update = function(self)
+        if self.y0 == self.finish_y0 then 
+          if self.counter == self.time then self.finished = true end 
+          self.counter += 1
+          return
+        end
+        self.y0 += 1
+      end,
+      draw = function(self)
+        cls(7)
+        print(self.lines[1],self.x0,self.y0,self.col)
+      end
+    },
+    credits = {
+      lines = {'code','art','and sfx','by your boi shen'},
+      col = 1,
+      counter = 0,
+      time = 10 * 30,
+      finished = false,
+      update = function(self)
+        if self.counter == self.time then
+          self.finished = true
+        end
+        self.counter += 1
+      end,
+      draw = function(self)
+        cls(7)
+        print_text_centered(self.lines,cam,1)
+      end
+    },
+    title = {
+      draw = function(self)
+        cls()
+      end
+    },
+    draw = function(self)
+      if not self.logo.finished then return self.logo:draw() end
+
+      if not self.credits.finished then return self.credits:draw() end
+
+      self.title:draw()
+    end
+  }
+
+  
+    
   
   selected_card:place_starting_card()
 end
 
 function game_update()
-  pause_screen:update()
-  if is_notice_board_or_pause_screen_showing() then return end
-  z_button:update()
-  selected_card:update()
-  blink:update()
-  for fruit in all(planted_fruits) do
-    fruit:update()
-  end
-  card_slide_manager:update()
-  adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
-  camera(cam.x0,cam.y0)
+  intro.logo:update()
+  intro.credits:update()
+  -- pause_screen:update()
+  -- if is_notice_board_or_pause_screen_showing() then return end
+  -- z_button:update()
+  -- selected_card:update()
+  -- blink:update()
+  -- for fruit in all(planted_fruits) do
+  --   fruit:update()
+  -- end
+  -- card_slide_manager:update()
+  -- adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
+  -- camera(cam.x0,cam.y0)
 end
 
 function game_draw()
   cls(5)
+  intro:draw()
   
-  lawn:draw()
+  -- lawn:draw()
 
-  for fruit in all(planted_fruits) do
-    fruit:draw()
-  end
-  selected_card:draw()
-  pause_screen:draw()
-  notice_board:draw()
+  -- for fruit in all(planted_fruits) do
+  --   fruit:draw()
+  -- end
+  -- selected_card:draw()
+  -- pause_screen:draw()
+  -- notice_board:draw()
 end
 
 function view_orchard()

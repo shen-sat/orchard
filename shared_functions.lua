@@ -76,3 +76,25 @@ end
 function is_notice_board_or_pause_screen_showing()
   return (notice_board.show or pause_screen.show)
 end
+
+-- assumes no line is wider than screen width
+function print_text_centered(lines,camera,col)
+  local cam_x = camera.x
+  local cam_y = camera.y
+  local lines_count = #lines
+
+  local y0 = (128/2) - ((lines_count * 6)/2)
+
+  local x0 = 128
+  for line in all(lines) do
+    local character_count = #line
+
+    local temp_x0 = (128/2) - ((character_count * 4)/2)
+    if temp_x0 < x0 then x0 = temp_x0 end
+  end
+
+  print(lines[1],x0,y0,col)
+  for line in all(lines) do
+    if not (line == lines[1]) then print(line) end
+  end
+end
