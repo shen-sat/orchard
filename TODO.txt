@@ -1,22 +1,17 @@
 In progress:
+Mach C (Points Mean Prizes!)
+- take score from game into rank screen
+- row will blink to indicate actual rank
+    - first just make it white, to check it is working
+    - then make it white
+
 
 ------------------------------
 Elevator pitch: remake Orchard in PICO-8
 
 TODO:
 
-Mach C (Points Mean Prizes!)
-- requires aseprite mock
-- score should be calculated at end, based on ages of planted fruits
-- once last card pressed, any key press will bring up "Press X to continue" (use board from before)
-- pressing X brings up same pause screen but now it displays:
-    - fruit sprites with x number next to each one
-    - final score
-    - "Press X to see rank"
-- pressing x again brings up rank on same board with rows of possible ranks https://gamerules.com/rules/orchard/
-    - row will blink to indicate actual rank
-    - - "Press X to see rank"
-- pressing x again should take you back to MAIN TITLE
+
 
 Mach D (SFX)
 - growth "blops"
@@ -31,7 +26,7 @@ Mach E (Main Titles)
     - https://saint11.org/img/pixel-tutorials/Vegetation.gif (leaves flaoting down)
     - https://saint11.org/img/pixel-tutorials/Wood.gif (trunk)
     - https://www.youtube.com/watch?v=Cdi8TdKJ4KE
-- shintendo screen
+- shentendo screen
 - credits screen
     - code
     - graphics
@@ -46,6 +41,7 @@ Mach E (Main Titles)
     - should include "A PICO-8 demake"
     - "Press X to start" should appear after a while, or on button X press
 - each screen should "fade" into next. Google pico 8 examples for pseudo fade 
+- pressing x on game over should take you back to MAIN TITLE
 
 Mach E (Music To My Ears)
 - yoga music https://www.youtube.com/watch?v=VaoV1PrYft4

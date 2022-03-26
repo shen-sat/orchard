@@ -5,7 +5,7 @@ make_fruit = function(name,color)
     y = 0,
     color = color,
     age = 0,
-    ages = {0,1,3,6},
+    ages = {0,3,6,9},
     age_index = function(self)
       local index
       for i,age in pairs(self.ages) do

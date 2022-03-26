@@ -30,6 +30,7 @@ function start_game()
   #include x_button.lua
   #include pause_screen.lua
   #include notice_board.lua
+  #include rank_screen.lua
   
   selected_card:place_starting_card()
 end
@@ -59,8 +60,6 @@ function game_draw()
   selected_card:draw()
   pause_screen:draw()
   notice_board:draw()
-
-  -- print(deck:count(),cam.x0,cam.y0,7)
 end
 
 function view_orchard()
@@ -91,6 +90,7 @@ function view_orchard_draw()
 end
 
 function show_scores_update()
+  blink:update()
   x_button:update()
   if x_button.is_just_released then
     camera(0,0)
@@ -100,9 +100,7 @@ end
 
 function show_scores_draw()
   cls()
-  print('game over',cam.x0 + 1,cam.y0 + 1,7)
-  print('final score:'..score,cam.x0 + 1,cam.y0 + 7,7)
-  print('press x to replay',cam.x0 + 1,cam.y0 + 13,7)
+  rank_screen:draw()
 end
 
 #include shared_functions.lua

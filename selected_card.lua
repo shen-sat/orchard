@@ -95,9 +95,10 @@ selected_card = {
       for fruit in all(self.card) do
         
         local matching_planted_fruit = fruit:matching_fruit()
-        if matching_planted_fruit then 
-          score += 1
+        if matching_planted_fruit then
+          score -= matching_planted_fruit.age
           matching_planted_fruit:grow()
+          score += matching_planted_fruit.age
         elseif fruit:is_plantable() then
           add(planted_fruits,fruit)
         end        
