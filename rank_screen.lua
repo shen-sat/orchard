@@ -85,6 +85,6 @@ rank_screen = {
     line(self:x0() + 127,self:y0(),self:x0() + 127,self:y0() + 127,2)
 
     self:title(self.text_data, 4 * 4,56,9)
-    print('press x to retry',32,88,1)
+    print('press x to retry',cam.x0 + 32,cam.y0 + 88,1)
   end
 }
