@@ -35,48 +35,88 @@ function start_game()
   intro = {
     logo = { 
       lines = {'shentendo✽'},
-      col = 1,
+      background_col = 3,
+      text_col = 1,
       x0 = cam.x0 + (128/2) - ((10 * 4)/2),
       y0 = cam.y0 - 6,
-      finish_y0 = cam.y0 + 128/2 - (2),
+      finish_y0 = cam.y0 + (128/2) - (3),
       counter = 0,
-      time = 2 * 30,
+      time = 3 * 30,
       finished = false,
+      increment_y0 = function(self) self.y0 += 1 end,
       update = function(self)
-        if self.y0 == self.finish_y0 then 
-          if self.counter == self.time then self.finished = true end 
-          self.counter += 1
-          return
-        end
-        self.y0 += 1
+        if not (self.y0 == self.finish_y0) then return self:increment_y0() end         
+
+        self.counter += 1
+        if self.counter >= self.time then self.finished = true end
       end,
       draw = function(self)
-        cls(7)
-        print(self.lines[1],self.x0,self.y0,self.col)
+        cls(self.background_col)
+        print(self.lines[1],self.x0,self.y0,self.text_col)
       end
     },
     credits = {
       lines = {'code','art','and sfx','by your boi shen'},
-      col = 1,
+      background_col = 3,
+      text_col = 1,
       counter = 0,
-      time = 10 * 30,
+      time = 5 * 30,
+      fade_counter = 20,
+      fade_step = 0,
       finished = false,
-      update = function(self)
-        if self.counter == self.time then
-          self.finished = true
+      start_fade = false,
+      pal_data = function(self) 
+        return 
+        {
+          { { self.text_col,self.background_col } },
+          { { self.background_col,self.text_col } },
+          { { self.text_col,0 }, { self.background_col,0 } },
+          { { self.text_col,1 }, { self.background_col,1 } }
+        }
+      end,
+      set_pal = function(self)
+        local pal_datum = self:pal_data()[self.fade_step]
+
+        if pal_datum == nil then return end
+
+        for pairing in all(pal_datum) do
+          pal(pairing[1],pairing[2])
         end
+      end,
+      calculate_fade = function(self)
+        local num = self.fade_counter % 20
+        if num == 0 then self.fade_step += 1 end
+        self.fade_counter += 1
+        if self.fade_step > #self:pal_data() then self.finished = true end
+      end,
+      update = function(self)
+        if self.start_fade then return self:calculate_fade() end
+          
         self.counter += 1
+        if self.counter >= self.time then
+          self.start_fade = true
+        end
       end,
       draw = function(self)
-        cls(7)
-        print_text_centered(self.lines,cam,1)
+        pal()
+        self:set_pal()
+
+        rectfill(0,0,127,127,self.background_col)
+        print_text_centered(self.lines,cam,self.text_col)
       end
     },
     title = {
       draw = function(self)
-        cls()
+        -- pal()
+        -- cls(7)
+        -- spr(128,20,25,13,6)
       end
     },
+    update = function(self)
+      if not self.logo.finished then return self.logo:update() end
+
+      if not self.credits.finished then return self.credits:update() end
+    end,
     draw = function(self)
       if not self.logo.finished then return self.logo:draw() end
 
@@ -93,8 +133,7 @@ function start_game()
 end
 
 function game_update()
-  intro.logo:update()
-  intro.credits:update()
+  intro:update()
   -- pause_screen:update()
   -- if is_notice_board_or_pause_screen_showing() then return end
   -- z_button:update()

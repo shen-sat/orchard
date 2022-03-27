@@ -83,7 +83,7 @@ function print_text_centered(lines,camera,col)
   local cam_y = camera.y
   local lines_count = #lines
 
-  local y0 = (128/2) - ((lines_count * 6)/2)
+  local y0 = ((128/2) - (3)) - ((lines_count - 1) * 6)
 
   local x0 = 128
   for line in all(lines) do
