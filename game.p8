@@ -61,61 +61,53 @@ function start_game()
       text_col = 1,
       counter = 0,
       time = 5 * 30,
-      fade_counter = 20,
+      fade_counter = 0,
       fade_step = 0,
       finished = false,
       start_fade = false,
-      pal_data = function(self) 
-        return 
-        {
-          { { self.text_col,self.background_col } },
-          { { self.background_col,self.text_col } },
-          { { self.text_col,0 }, { self.background_col,0 } },
-          { { self.text_col,1 }, { self.background_col,1 } }
-        }
-      end,
-      set_pal = function(self)
-        local pal_datum = self:pal_data()[self.fade_step]
-
-        if pal_datum == nil then return end
-
-        for pairing in all(pal_datum) do
-          pal(pairing[1],pairing[2])
-        end
-      end,
+      pal_data =  {3,1,0,5,6},
       calculate_fade = function(self)
-        local num = self.fade_counter % 20
+        local num = self.fade_counter % 3
         if num == 0 then self.fade_step += 1 end
         self.fade_counter += 1
-        if self.fade_step > #self:pal_data() then self.finished = true end
+        if self.fade_step > #self.pal_data then self.finished = true end
       end,
       update = function(self)
-        if self.start_fade then return self:calculate_fade() end
-          
-        self.counter += 1
-        if self.counter >= self.time then
-          self.start_fade = true
+        if not self.start_fade then
+          self.counter += 1
+          if self.counter > self.time then self.start_fade = true end
         end
+        
+        if self.start_fade then self:calculate_fade() end
       end,
       draw = function(self)
-        pal()
-        self:set_pal()
-
+        if self.start_fade then
+          rectfill(0,0,127,127,self.pal_data[self.fade_step])  
+          return
+        end
         rectfill(0,0,127,127,self.background_col)
         print_text_centered(self.lines,cam,self.text_col)
       end
     },
     title = {
+      fade_counter = 2,
+      fade_step = 0,
+      is_draw_frame = false,
+      pal_data = function(self)
+      end,
+      update = function(self)
+      end,
       draw = function(self)
-        -- pal()
-        -- cls(7)
-        -- spr(128,20,25,13,6)
+        rectfill(0,0,127,127,7)
+        spr(128,20,25,13,6)
       end
     },
     update = function(self)
       if not self.logo.finished then return self.logo:update() end
 
       if not self.credits.finished then return self.credits:update() end
+
+      self.title:update()
     end,
     draw = function(self)
       if not self.logo.finished then return self.logo:draw() end
