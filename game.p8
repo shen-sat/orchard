@@ -15,9 +15,6 @@ function _draw()
 end
 
 function start_game()
-  game.update = game_update
-  game.draw = game_draw
-
   #include global_variables.lua
   #include blink.lua
   #include camera.lua
@@ -31,126 +28,39 @@ function start_game()
   #include pause_screen.lua
   #include notice_board.lua
   #include rank_screen.lua
+  #include intro.lua
 
-  intro = {
-    logo = { 
-      lines = {'shentendo✽'},
-      background_col = 3,
-      text_col = 1,
-      x0 = cam.x0 + (128/2) - ((10 * 4)/2),
-      y0 = cam.y0 - 6,
-      finish_y0 = cam.y0 + (128/2) - (3),
-      counter = 0,
-      time = 3 * 30,
-      finished = false,
-      increment_y0 = function(self) self.y0 += 1 end,
-      update = function(self)
-        if not (self.y0 == self.finish_y0) then return self:increment_y0() end         
-
-        self.counter += 1
-        if self.counter >= self.time then self.finished = true end
-      end,
-      draw = function(self)
-        cls(self.background_col)
-        print(self.lines[1],self.x0,self.y0,self.text_col)
-      end
-    },
-    credits = {
-      lines = {'code','art','and sfx','by your boi shen'},
-      background_col = 3,
-      text_col = 1,
-      counter = 0,
-      time = 5 * 30,
-      fade_counter = 0,
-      fade_step = 0,
-      finished = false,
-      start_fade = false,
-      pal_data =  {3,1,0,5,6},
-      calculate_fade = function(self)
-        local num = self.fade_counter % 3
-        if num == 0 then self.fade_step += 1 end
-        self.fade_counter += 1
-        if self.fade_step > #self.pal_data then self.finished = true end
-      end,
-      update = function(self)
-        if not self.start_fade then
-          self.counter += 1
-          if self.counter > self.time then self.start_fade = true end
-        end
-        
-        if self.start_fade then self:calculate_fade() end
-      end,
-      draw = function(self)
-        if self.start_fade then
-          rectfill(0,0,127,127,self.pal_data[self.fade_step])  
-          return
-        end
-        rectfill(0,0,127,127,self.background_col)
-        print_text_centered(self.lines,cam,self.text_col)
-      end
-    },
-    title = {
-      fade_counter = 2,
-      fade_step = 0,
-      is_draw_frame = false,
-      pal_data = function(self)
-      end,
-      update = function(self)
-      end,
-      draw = function(self)
-        rectfill(0,0,127,127,7)
-        spr(128,20,25,13,6)
-      end
-    },
-    update = function(self)
-      if not self.logo.finished then return self.logo:update() end
-
-      if not self.credits.finished then return self.credits:update() end
-
-      self.title:update()
-    end,
-    draw = function(self)
-      if not self.logo.finished then return self.logo:draw() end
-
-      if not self.credits.finished then return self.credits:draw() end
-
-      self.title:draw()
-    end
-  }
-
-  
-    
-  
   selected_card:place_starting_card()
+
+  game.update = intro_update
+  game.draw = intro_draw
 end
 
 function game_update()
-  intro:update()
-  -- pause_screen:update()
-  -- if is_notice_board_or_pause_screen_showing() then return end
-  -- z_button:update()
-  -- selected_card:update()
-  -- blink:update()
-  -- for fruit in all(planted_fruits) do
-  --   fruit:update()
-  -- end
-  -- card_slide_manager:update()
-  -- adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
-  -- camera(cam.x0,cam.y0)
+  pause_screen:update()
+  if is_notice_board_or_pause_screen_showing() then return end
+  z_button:update()
+  selected_card:update()
+  blink:update()
+  for fruit in all(planted_fruits) do
+    fruit:update()
+  end
+  card_slide_manager:update()
+  adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
+  camera(cam.x0,cam.y0)
 end
 
 function game_draw()
   cls(5)
-  intro:draw()
-  
-  -- lawn:draw()
 
-  -- for fruit in all(planted_fruits) do
-  --   fruit:draw()
-  -- end
-  -- selected_card:draw()
-  -- pause_screen:draw()
-  -- notice_board:draw()
+  lawn:draw()
+
+  for fruit in all(planted_fruits) do
+    fruit:draw()
+  end
+  selected_card:draw()
+  pause_screen:draw()
+  notice_board:draw()
 end
 
 function view_orchard()
@@ -192,6 +102,14 @@ end
 function show_scores_draw()
   cls()
   rank_screen:draw()
+end
+
+function intro_update()
+  intro:update()
+end
+
+function intro_draw()
+  intro:draw()
 end
 
 #include shared_functions.lua
