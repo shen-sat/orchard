@@ -1,54 +1,17 @@
 In progress:
 
-- have a start screen object
-    - has shentendo
-        - text
-        - position
-        - finish_position
-        - write something in middle of screen method?
-        - on update, position moves down
-        - when it reaches finish_position, it switches a flag
-    - has credits
-        - code, art and sfx by your boi shen
-        - game design by Mark Tuck
-        - time on screen (7 for now)
-        - when time is finsihed, flag is switched
-    - has main titles
-        - need to work out position of all elements
-        - after some time elapsed (or button X press) show "press start"
-        - on press x (again), start game
-    - then add fade in/fade out for all the above
-
-Mach E (Main Titles)
-- shentendo screen
-- credits screen
-    - code
-    - graphics
-    - sfx
-    - music
-    - special mentions:
-        - gameplay taken from the titular board game
-        - music adapted from Chris Zabriskie: We Always Thought The Future Would Be Kind 
-- main screen
-    - falling leaves animation
-    - piles of fruit on ground
-    - should include "A PICO-8 demake"
-    - "Press X to start" should appear after a while, or on button X press
-- each screen should "fade" into next. Google pico 8 examples for pseudo fade 
-- pressing x on game over should take you back to MAIN TITLE
+Mach D (SFX)
+- card slide "shhh"
+- card movement "bub" for rotate/"boob" for move
+- card placement "flumf/floomf"
+- growth "blops"
+- pause "clack", or if it is sliding in: "ffffd" 
+- start game tinkly "di di di di"
 
 ------------------------------
 Elevator pitch: remake Orchard in PICO-8
 
 TODO:
-
-Mach D (SFX)
-- growth "blops"
-- card slide "shhh"
-- card movement "bub" for rotate/"boob" for move
-- card placement "flumf/floomf"
-- pause "clack"
-- start game tinkly "di di di di"
 
 
 Mach E (Music To My Ears)
@@ -91,3 +54,4 @@ DONE:
 - change hold x to bring up pause screen
 - add pause screen and notice board
 - show rank screen
+- add intro

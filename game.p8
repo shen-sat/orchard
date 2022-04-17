@@ -30,10 +30,30 @@ function start_game()
   #include rank_screen.lua
   #include intro.lua
 
+
+  slide = {
+    id = 0,
+    is_card_sliding = false,
+    is_playing = false,
+    update = function(self)
+      if not self.is_card_sliding and self.is_playing then self.is_playing = false end
+
+      if self.is_card_sliding then
+        self.is_card_sliding = false
+        if not self.is_playing then
+          self.is_playing = true
+          sfx(self.id)
+        end
+      end
+    end
+  }
+
   selected_card:place_starting_card()
 
-  game.update = intro_update
-  game.draw = intro_draw
+  -- game.update = intro_update
+  -- game.draw = intro_draw
+  game.update = game_update
+  game.draw = game_draw
 end
 
 function game_update()
@@ -48,6 +68,7 @@ function game_update()
   card_slide_manager:update()
   adjust_selected_card_or_camera_position(selected_card,cam,card_slide_manager)
   camera(cam.x0,cam.y0)
+  slide:update()
 end
 
 function game_draw()
@@ -227,3 +248,5 @@ bbbbbbbbbbbb3bbb3333bbbb111bbbbbbbbbb24444a99333bbb3bbb333333bbb3bbb3333bbbbb3bb
 0bbbbbbbbbb33bbb33333b1113111bbbbbbb2244aaa3aaa3bbb3bbb333333bbb3bbb33333bbbb3bbbbbbbb888088808880000000000000000000000000000000
 00bbbbbbbb333bbb3333331113111bbbbbb22244aa93aa93bbb3bbb333333bbb3bbb333333bbb3bbbbbbbb882088208820000000000000000000000000000000
 0000bbbb33333bbb33333311131113bbbb222244a993a993bbb3bbb333333bbb3bbb3333333bb3bbbbbbbb822082208220000000000000000000000000000000
+__sfx__
+000600000961404610046100161500605006000160001600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600

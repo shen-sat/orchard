@@ -77,6 +77,7 @@ selected_card = {
     self:update_fruits()
   end,
   slide = function(self)
+    slide.is_card_sliding = true
     if self.slide_counter < 6 then 
       self.y0 += 8
       self.slide_counter += 1
