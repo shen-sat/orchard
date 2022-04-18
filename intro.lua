@@ -53,7 +53,7 @@ intro = {
   },
   title = {
     counter = 0,
-    time = 8 * 30,
+    time = 4 * 30,
     fade_counter = 0,
     fade_step = 0,
     change_state = function()
@@ -69,7 +69,10 @@ intro = {
     end,
     update = function(self)
       if not self.start_fade then
-        if btnp(5) then self.start_fade = true end
+        if btnp(5) then 
+          self.start_fade = true
+          music(-1, 4000)
+        end
       end
       
       if self.start_fade then self:calculate_fade() end
