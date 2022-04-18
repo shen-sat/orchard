@@ -3,7 +3,7 @@ version 32
 __lua__
 function _init()
   game = {}
-  start_game()
+  start_game(true)
 end
 
 function _update()
@@ -14,7 +14,7 @@ function _draw()
   game.draw()
 end
 
-function start_game()
+function start_game(is_first_time)
   #include global_variables.lua
   #include blink.lua
   #include camera.lua
@@ -32,11 +32,14 @@ function start_game()
 
   selected_card:place_starting_card()
 
-  game.update = intro_update
-  game.draw = intro_draw
-  music(0)
-  -- game.update = game_update
-  -- game.draw = game_draw
+  if is_first_time then
+    game.update = intro_update
+    game.draw = intro_draw
+    music(0)
+  else
+    game.update = game_update
+    game.draw = game_draw
+  end
 end
 
 function game_update()
@@ -69,7 +72,7 @@ end
 function view_orchard()
   game.update = view_orchard_update
   game.draw = view_orchard_draw
-  music(0, 4000)
+  music(0, 7000)
 end
 
 function view_orchard_update()
@@ -100,8 +103,7 @@ function show_scores_update()
   if x_button.is_just_released then
     music(-1, 4000)
     camera(0,0)
-    game.update = intro_update
-    game.draw = intro_draw
+    start_game(false)
   end
 end
 
@@ -239,5 +241,5 @@ __sfx__
 010f000011026000061a0061d0061f00621006230062e0062e0062b0062b00629006240061f006180060a0060a006070060700607006070060700607006030060000600006000060000600006000060000600006
 010f000011000000001a0001d0001f00021000230002e0002e0002b0002b00029000240001f000180000a0000a000070000700007000070000700007000030000000000000000000000000000000000000000000
 __music__
-00 00424344
+03 00424344
 
