@@ -65,6 +65,7 @@ make_fruit = function(name,color)
       {96,98,100,102,104,106,108}
     },
     grow = function(self)
+      sfx(2)
       local age_index = self:age_index()
 
       if age_index >= #self.ages then

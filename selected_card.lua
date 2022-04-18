@@ -77,7 +77,6 @@ selected_card = {
     self:update_fruits()
   end,
   slide = function(self)
-    slide.is_card_sliding = true
     if self.slide_counter < 6 then 
       self.y0 += 8
       self.slide_counter += 1
@@ -136,14 +135,19 @@ selected_card = {
   end,
   move = function(self)
     if z_button.is_just_released then
+      sfx(1)
       self.compass:rotate()
     elseif btnp(1) then
+      sfx(1)
       self.x0 += tile_size
     elseif btnp(0) then
+      sfx(1)
       self.x0 -= tile_size
     elseif btnp(2) then
+      sfx(1)
       self.y0 -= tile_size
     elseif btnp(3) and not z_button.is_down then
+      sfx(1)
       self.y0 += tile_size
     end
   end,
