@@ -30,6 +30,47 @@ function start_game(is_first_time)
   #include rank_screen.lua
   #include intro.lua
 
+  
+  fade_object = {
+    fade_counter = 0,
+    fade_step = 0,
+    is_finished = false,
+    pal_data = {3,5,1,0,0,1,5,3},
+    calculate_fade = function(self)
+      local num = self.fade_counter % 10
+      if num == 0 then self.fade_step += 1 end
+      self.fade_counter += 1
+      if self.fade_step > #self.pal_data then self.is_finished = true end
+    end,
+    update = function(self)
+      self:calculate_fade()
+    end,
+    draw = function(self)
+      if not self.pal_data[self.fade_step] then return rectfill(0,0,127,127,3) end
+      rectfill(0,0,127,127,self.pal_data[self.fade_step]) 
+    end
+  }
+
+  fade_object_two = {
+    fade_counter = 0,
+    fade_step = 0,
+    is_finished = false,
+    pal_data = {3,5,1,0,0,1,5,3},
+    calculate_fade = function(self)
+      local num = self.fade_counter % 10
+      if num == 0 then self.fade_step += 1 end
+      self.fade_counter += 1
+      if self.fade_step > #self.pal_data then self.is_finished = true end
+    end,
+    update = function(self)
+      self:calculate_fade()
+    end,
+    draw = function(self)
+      if not self.pal_data[self.fade_step] then return rectfill(0,0,127,127,3) end
+      rectfill(0,0,127,127,self.pal_data[self.fade_step]) 
+    end
+  }
+
   selected_card:place_starting_card()
 
   if is_first_time then
@@ -84,6 +125,9 @@ function view_orchard_update()
   if x_button.is_just_released then
     game.update = show_scores_update
     game.draw = show_scores_draw
+    camera(0,0)
+    cam.x0 = 0
+    cam.y0 = 0
   end
 end
 
@@ -98,18 +142,36 @@ function view_orchard_draw()
 end
 
 function show_scores_update()
+  if not fade_object.is_finished then return fade_object:update() end
+
   blink:update()
   x_button:update()
   if x_button.is_just_released then
     music(-1, 4000)
-    camera(0,0)
-    start_game(false)
+    foobar()
   end
 end
 
+
 function show_scores_draw()
   cls()
+  if not fade_object.is_finished then return fade_object:draw() end
+  
   rank_screen:draw()
+end
+
+function foobar()
+  game.update = foobar_update
+  game.draw = foobar_draw
+end
+
+function foobar_update()
+  if not fade_object_two.is_finished then return fade_object_two:update() end  
+  start_game(false)
+end
+
+function foobar_draw()
+  if not fade_object_two.is_finished then return fade_object_two:draw() end  
 end
 
 function intro_update()
