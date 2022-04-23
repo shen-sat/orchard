@@ -52,6 +52,7 @@ intro = {
     end
   },
   title = {
+    title_blink_counter = 0,
     counter = 0,
     time = 4 * 30,
     fade_counter = 0,
@@ -84,6 +85,15 @@ intro = {
       end
       rectfill(0,0,127,127,7)
       spr(128,20,25,13,6)
+      rectfill(20 + (16*6),25,127,25 + (16*2),7)
+      self.title_blink_counter += 1
+
+      if self.title_blink_counter > 80 then 
+        self.title_blink_counter = 0
+      elseif self.title_blink_counter > 40 then 
+        spr(140,20 + 28,26,3,3)
+      end
+
       if self.counter < self.time then
         self.counter += 1
       else
