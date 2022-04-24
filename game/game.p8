@@ -15,20 +15,20 @@ function _draw()
 end
 
 function start_game(is_first_time)
-  #include global_variables.lua
-  #include blink.lua
-  #include camera.lua
-  #include fruits.lua
-  #include deck.lua
-  #include selected_card.lua
-  #include lawn.lua
-  #include card_slide_manager.lua
-  #include z_button.lua
-  #include x_button.lua
-  #include pause_screen.lua
-  #include notice_board.lua
-  #include rank_screen.lua
-  #include intro.lua
+  #include lib/global_variables.lua
+  #include lib/blink.lua
+  #include lib/camera.lua
+  #include lib/fruits.lua
+  #include lib/deck.lua
+  #include lib/selected_card.lua
+  #include lib/lawn.lua
+  #include lib/card_slide_manager.lua
+  #include lib/z_button.lua
+  #include lib/x_button.lua
+  #include lib/pause_screen.lua
+  #include lib/notice_board.lua
+  #include lib/rank_screen.lua
+  #include lib/intro.lua
 
   
   fade_object = {
@@ -196,7 +196,7 @@ function intro_draw()
   intro:draw()
 end
 
-#include shared_functions.lua
+#include lib/shared_functions.lua
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000088800000000000001110000000000000aaa000000000000000000000000000
