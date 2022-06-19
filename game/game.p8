@@ -162,7 +162,7 @@ function show_scores_update()
   x_button:update()
   if x_button.is_just_released then
     music(-1, 4000)
-    foobar()
+    restart()
   end
 end
 
@@ -174,17 +174,17 @@ function show_scores_draw()
   rank_screen:draw()
 end
 
-function foobar()
-  game.update = foobar_update
-  game.draw = foobar_draw
+function restart()
+  game.update = restart_update
+  game.draw = restart_draw
 end
 
-function foobar_update()
+function restart_update()
   if not fade_object_two.is_finished then return fade_object_two:update() end  
   start_game(false)
 end
 
-function foobar_draw()
+function restart_draw()
   if not fade_object_two.is_finished then return fade_object_two:draw() end  
 end
 
